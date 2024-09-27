@@ -1,15 +1,6 @@
 <?php
 
-// url aplikasi
-define('BASE_URL', 'http://localhost/sistem-sekolah');
-
-// nama aplikasi
-define('APP_NAME', 'Sistem Sekolah');
-
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'sistem_sekolah');
+require_once 'const.php';
 
 // koneksi ke database
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
