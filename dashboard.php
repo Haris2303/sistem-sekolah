@@ -1,6 +1,6 @@
 <?php
 $title = 'Home';
-require_once 'template/dashboard_navbar.php';
+require_once __DIR__ . '/template/dashboard_navbar.php';
 ?>
 
 <main id="main" class="main">
@@ -84,4 +84,4 @@ require_once 'template/dashboard_navbar.php';
 
 </main>
 
-<?php require_once 'template/dashboard_footer.php' ?>
+<?php require_once __DIR__ . '/template/dashboard_footer.php' ?>

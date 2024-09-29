@@ -64,13 +64,15 @@ function editGuruById($id_pengguna, $data)
         $photo = $photo_lama;
     } else {
         $photo = upload('guru');
+        unlink(__DIR__ . '/../img/guru/' . $photo_lama);
     }
 
+    $record = 0;
     try {
         $conn->autocommit(false);
 
         $redirect = '/guru_edit.php?id_pengguna=' . $id_pengguna;
-        editPenggunaById($id_pengguna, $data, $redirect);
+        $record = editPenggunaById($id_pengguna, $data, $redirect);
 
         $sql = "UPDATE guru SET 
                 photo = '$photo',
@@ -86,7 +88,7 @@ function editGuruById($id_pengguna, $data)
 
         $conn->query($sql);
 
-        $record = $conn->affected_rows;
+        $record .= $conn->affected_rows;
 
         $conn->commit();
     } catch (Exception $e) {
@@ -135,4 +137,22 @@ function hapusGuruById($id_pengguna)
     unlink(__DIR__ . '/../img/guru/' . $photo);
 
     return $record;
+}
+
+function editPhotoGuruById($id_pengguna, $files)
+{
+    global $conn;
+
+    $guru = selectGuruById($id_pengguna);
+    $photo_lama = $guru['photo'];
+
+    if ($files['photo']['error'] === 4) {
+        $photo = $photo_lama;
+    } else {
+        $photo = upload('guru');
+        unlink(__DIR__ . '/../img/guru/' . $photo_lama);
+    }
+
+    $sql = "UPDATE guru SET photo = '$photo' WHERE id_pengguna = $id_pengguna";
+    $conn->query($sql);
 }

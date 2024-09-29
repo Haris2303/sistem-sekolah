@@ -1,4 +1,4 @@
-<?php require_once 'template/navbar.php' ?>
+<?php require_once __DIR__ . '/template/navbar.php' ?>
 
 <div class="container" style="margin-top: 8rem;">
     <!-- title -->
@@ -22,4 +22,4 @@
     </div>
 </div>
 
-<?php require_once 'template/footer.php' ?>
+<?php require_once __DIR__ . '/template/footer.php' ?>

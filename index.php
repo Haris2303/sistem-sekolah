@@ -1,4 +1,4 @@
-<?php require_once 'template/navbar.php' ?>
+<?php require_once __DIR__ . '/template/navbar.php' ?>
 
 <!-- Slider -->
 
@@ -134,4 +134,4 @@
 
 <!-- End Contact -->
 
-<?php require_once 'template/footer.php' ?>
+<?php require_once __DIR__ . '/template/footer.php' ?>

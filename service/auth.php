@@ -1,10 +1,12 @@
 <?php
+session_start();
 
 require_once __DIR__ . '/guru.php';
+require_once __DIR__ . '/siswa.php';
 
 // ketika daftar 
 if (isset($_POST['daftar'])) {
-    if (daftar($_POST, 'admin')) {
+    if (daftar($_POST, 'admin', '/daftar.php')) {
         echo "
         <script>
             alert('User berhasil registrasi')
@@ -22,7 +24,7 @@ if (isset($_POST['daftar'])) {
 }
 
 // Fugnsi daftar akun
-function daftar($data, $role)
+function daftar($data, $role, $redirect)
 {
     global $conn;
 
@@ -32,15 +34,24 @@ function daftar($data, $role)
         $conn->autocommit(false);
 
         // buat data pengguna
-        $id_pengguna = tambahPengguna($data, $role);
+        $id_pengguna = tambahPengguna($data, $role, $redirect);
 
         // check apakah role adalah guru
-        if ($role == 'guru') {
+        if ($role === 'guru') {
             // dapatkan id pengguna setelah insert
             $id_pengguna = $conn->insert_id;
 
             // deklarasi data dari form
             tambahGuru($data, $id_pengguna);
+        }
+
+        // check apakah role adalah guru
+        if ($role === 'siswa') {
+            // dapatkan id pengguna setelah insert
+            $id_pengguna = $conn->insert_id;
+
+            // deklarasi data dari form
+            tambahSiswa($data, $id_pengguna);
         }
         // tangkap hasil record
         $record = $conn->affected_rows;
@@ -50,9 +61,7 @@ function daftar($data, $role)
         echo "
         <script>
             alert('Error: " . $e->getMessage() . "')
-            document.location.href = '" . BASE_URL . "/daftar.php'
         </script>";
-        exit;
     }
 
     // tutup koneksi
@@ -80,7 +89,9 @@ function login($data)
         if (password_verify($password, $row['password'])) {
             // set session
             $_SESSION['is_login'] = true;
-            $_SESSION['id_user'] = $row['id'];
+            $_SESSION['id_pengguna'] = $row['id_pengguna'];
+            $_SESSION['nama'] = $row['nama'];
+            $_SESSION['role'] = $row['role'];
             // arahkan ke halaman aplikasi
             header('location: ' . BASE_URL . '/dashboard.php');
             exit;
@@ -97,7 +108,7 @@ function login($data)
 }
 
 // Fungsi tambah data pengguna
-function tambahPengguna($data, $role)
+function tambahPengguna($data, $role, $redirect)
 {
     global $conn;
 
@@ -115,7 +126,7 @@ function tambahPengguna($data, $role)
         echo "
         <script>
             alert('Data email telah teregister')
-            document.location.href = '" . BASE_URL . "/daftar.php'
+            document.location.href = '" . BASE_URL . $redirect . "'
         </script>";
         exit;
     }
@@ -125,7 +136,7 @@ function tambahPengguna($data, $role)
         echo "
         <script>
             alert('Password konfirmasi tidak sama')
-            document.location.href = '" . BASE_URL . "/daftar.php'
+            document.location.href = '" . BASE_URL . $redirect . "'
         </script>";
         exit;
     }
@@ -159,11 +170,11 @@ function editPenggunaById($id_pengguna, $data, $redirect)
     $konfirmasi_password = $data['konfirmasi_password'];
 
     // cek username apakah sudah terdaftar
-    $sql = "SELECT username FROM pengguna WHERE id_pengguna = $id_pengguna";
+    $sql = "SELECT * FROM pengguna WHERE id_pengguna = $id_pengguna";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
 
-    if (isset($row['username'])) {
+    if ($data['password'] !== "") {
         if ($row['username'] !== $username) {
             echo "
                 <script>
@@ -175,10 +186,10 @@ function editPenggunaById($id_pengguna, $data, $redirect)
     }
 
     // ambil password lama
-    $password = $row['password'];
+    $password_db = $row['password'];
 
     // jika password diubah
-    if (isset($data['passowrd'])) {
+    if ($password !== "") {
         // cek password konfirmasi
         if ($password !== $konfirmasi_password) {
             echo "
@@ -190,7 +201,7 @@ function editPenggunaById($id_pengguna, $data, $redirect)
         }
 
         // enkripsi password
-        $password = password_hash($password, PASSWORD_DEFAULT);
+        $password_db = password_hash($password, PASSWORD_DEFAULT);
     }
 
     // edit data di database
@@ -198,10 +209,12 @@ function editPenggunaById($id_pengguna, $data, $redirect)
             nama = '$name', 
             email = '$email', 
             username = '$username', 
-            password = '$password'
+            password = '$password_db'
             WHERE id_pengguna = $id_pengguna";
 
     $conn->query($sql);
+
+    return $conn->affected_rows;
 }
 
 function hapusPenggunaById($id_pengguna)
@@ -209,4 +222,108 @@ function hapusPenggunaById($id_pengguna)
     global $conn;
     $sql = "DELETE FROM pengguna WHERE id_pengguna = $id_pengguna";
     $conn->query($sql);
+}
+
+function selectPenggunaById($id_pengguna)
+{
+    global $conn;
+    $sql = "SELECT * FROM pengguna WHERE id_pengguna = $id_pengguna";
+    return $conn->query($sql)->fetch_assoc();
+}
+
+function editProfile($id_pengguna, $data)
+{
+    global $conn;
+
+    // deklarasi data dari form
+    $name = $data['name'];
+    $email = $data['email'];
+    $username = $data['username'];
+    $password_lama = $data['password_lama'];
+    $password_baru = $data['password_baru'];
+    $konfirmasi_password = $data['konfirmasi_password'];
+    $photo_lama = $data['photo_lama'];
+
+    // cek username apakah sudah terdaftar
+    $sql = "SELECT * FROM pengguna WHERE id_pengguna = $id_pengguna";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+
+    if (isset($row['username'])) {
+        if ($row['username'] !== $username) {
+            echo "
+                <script>
+                    alert('Username telah terdaftar')
+                    document.location.href = '" . BASE_URL . "/profile.php'
+                </script>";
+            exit;
+        }
+    }
+
+    // ambil password lama pada database
+    $password = $row['password'];
+
+    // jika password diubah
+    if ($data['password_baru'] !== "") {
+        // cek password lama
+        if (password_verify($password_lama, $password)) {
+            // cek password konfirmasi
+            if ($password_baru !== $konfirmasi_password) {
+                echo "
+                <script>
+                    alert('Password konfirmasi tidak sama')
+                    document.location.href = '" . BASE_URL . "/profile.php'
+                </script>";
+                exit;
+            }
+
+            // enkripsi password
+            $password = password_hash($password_baru, PASSWORD_DEFAULT);
+        } else {
+            echo "
+                <script>
+                    alert('Password anda salah')
+                    document.location.href = '" . BASE_URL . "/profile.php'
+                </script>";
+            exit;
+        }
+    }
+
+    try {
+        $conn->autocommit(false);
+
+        // edit data di database
+        $sql = "UPDATE pengguna SET 
+                nama = '$name', 
+                email = '$email', 
+                username = '$username',
+                password = '$password'
+                WHERE id_pengguna = $id_pengguna";
+
+        $conn->query($sql);
+
+        // cek apakah pengguna adalah guru atau siswa
+
+        if ($_SESSION['role'] === 'guru') {
+            // upload gambar baru jika diubah
+            editPhotoGuruById($id_pengguna, $_FILES);
+        }
+
+        if ($_SESSION['role'] === 'siswa') {
+            // upload  gambar baru jika diubah
+            editPhotoSiswaById($id_pengguna, $_FILES);
+        }
+
+        $record = $conn->affected_rows;
+
+        $conn->commit();
+    } catch (Exception $e) {
+        echo "
+        <script>
+            alert('Error: " . $e->getMessage() . "')
+        </script>";
+    }
+
+
+    return $record;
 }

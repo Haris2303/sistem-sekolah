@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/const.php';
+require_once __DIR__ . '/../config/const.php';
 
 ?>
 

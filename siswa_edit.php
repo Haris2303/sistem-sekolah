@@ -1,29 +1,30 @@
 <?php
-$title = 'Edit Data Guru';
+$title = 'Edit Data Siswa';
 
 require_once 'template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
-require_once __DIR__ . '/service/guru.php';
+require_once __DIR__ . '/service/siswa.php';
+require_once __DIR__ . '/service/kelas.php';
 require_once __DIR__ . '/config/utilities.php';
 
 // ambil id get method
 $id_pengguna = $_GET['id_pengguna'];
 
-$data = selectGuruById($id_pengguna);
+$data = selectSiswaById($id_pengguna);
 
-if (isset($_POST['edit_guru'])) {
-    if (editGuruById($id_pengguna, $_POST)) {
+if (isset($_POST['edit_siswa'])) {
+    if (editSiswaById($id_pengguna, $_POST)) {
         echo "
         <script>
             alert('User berhasil diubah')
-            document.location.href = '" . BASE_URL . "/guru_edit.php?id_pengguna=" . $id_pengguna . "'
+            document.location.href = '" . BASE_URL . "/siswa_edit.php?id_pengguna=" . $id_pengguna . "'
         </script>";
         exit;
     } else {
         echo "
         <script>
             alert('User gagal diubah')
-            document.location.href = '" . BASE_URL . "/guru_edit.php?id_pengguna=" . $id_pengguna . "'
+            document.location.href = '" . BASE_URL . "/siswa_edit.php?id_pengguna=" . $id_pengguna . "'
         </script>";
         exit;
     }
@@ -32,7 +33,7 @@ if (isset($_POST['edit_guru'])) {
 
 <main id="main" class="main">
     <div class="pagetitle mb-3">
-        <h1>Edit Data Guru</h1>
+        <h1>Edit Data Siswa</h1>
         <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, totam ducimus! Quidem harum quos recusandae sed nihil consequatur impedit esse quaerat. Quasi ad possimus cupiditate suscipit nulla. Molestias, earum impedit?</span>
     </div>
 
@@ -45,7 +46,7 @@ if (isset($_POST['edit_guru'])) {
                     <input type="hidden" name="id_pengguna" value="<?= $id_pengguna ?>">
                     <div class="col-12">
                         <label for="photo_lama" class="form-label">Photo Lama</label>
-                        <img src="img/guru/<?= $data['photo'] ?>" alt="profile lama" class="img-thumbnail form-control" style="width: 10rem;">
+                        <img src="img/siswa/<?= $data['photo'] ?>" alt="profile lama" class="img-thumbnail form-control" style="width: 10rem;">
                         <input type="hidden" name="photo_lama" value="<?= $data['photo'] ?>">
                     </div>
                     <div class="col-12">
@@ -57,16 +58,8 @@ if (isset($_POST['edit_guru'])) {
                         <input type="text" class="form-control" name="name" id="name" value="<?= $data['nama'] ?>" required>
                     </div>
                     <div class="col-12">
-                        <label for="nip" class="form-label">NIP</label>
-                        <input type="text" class="form-control" name="nip" id="nip" value="<?= $data['nip'] ?>" required>
-                    </div>
-                    <div class="col-12">
-                        <label for="nuptk" class="form-label">NUPTK</label>
-                        <input type="text" class="form-control" name="nuptk" id="nuptk" value="<?= $data['nuptk'] ?>" required>
-                    </div>
-                    <div class="col-12">
-                        <label for="nrg" class="form-label">NRG</label>
-                        <input type="text" class="form-control" name="nrg" value="<?= $data['nrg'] ?>" id="nrg">
+                        <label for="nipd" class="form-label">NIPD</label>
+                        <input type="text" class="form-control" name="nipd" id="nipd" value="<?= $data['nipd'] ?>" required>
                     </div>
                     <div class="col-12">
                         <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label><br>
@@ -80,38 +73,11 @@ if (isset($_POST['edit_guru'])) {
                         </div>
                     </div>
                     <div class="col-12">
-                        <label for="bidang-studi" class="form-label">Bidang Studi</label>
-                        <select name="bidang_studi" id="bidang-studi" class="form-control" required>
-                            <option disabled>-- Pilih studi --</option>
-                            <?php foreach ($bidang as $row): ?>
-                                <option value="<?= $row ?>" <?= ($data['bidang_studi'] == $row) ? 'selected' : '' ?>><?= $row ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
-                    <div class="col-12">
-                        <label for="bidang-sertifikasi" class="form-label">Bidang Sertifikasi</label>
-                        <select name="bidang_sertifikasi" id="bidang-sertifikasi" class="form-control" required>
-                            <option disabled>-- Pilih sertifikasi --</option>
-                            <?php foreach ($bidang as $row): ?>
-                                <option value="<?= $row ?>" <?= ($data['bidang_sertifikasi'] == $row) ? 'selected' : '' ?>><?= $row ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
-                    <div class="col-12">
-                        <label for="jabatan" class="form-label">Jabatan</label>
-                        <select name="jabatan" id="jabatan" class="form-control" required>
-                            <option disabled selected>-- Pilih jabatan --</option>
-                            <?php foreach ($jabatan as $row): ?>
-                                <option value="<?= $row ?>" <?= ($data['jabatan'] == $row) ? 'selected' : '' ?>><?= $row ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
-                    <div class="col-12">
-                        <label for="tugas_tambahan" class="form-label">Tugas Tambahan (Optional)</label>
-                        <select name="tugas_tambahan" id="tugas_tambahan" class="form-control">
-                            <option disabled selected>-- Pilih tugas tambahan --</option>
-                            <?php foreach ($tugas_tambahan as $row): ?>
-                                <option value="<?= $row ?>" <?= ($data['tugas_tambahan'] == $row) ? 'selected' : '' ?>><?= $row ?></option>
+                        <label for="kelas" class="form-label">Kelas</label>
+                        <select name="id_kelas" id="kelas" class="form-control">
+                            <option disabled selected>-- Pilih Kelas --</option>
+                            <?php foreach (listKelas() as $row): ?>
+                                <option value="<?= $row['id_kelas'] ?>" <?= ($data['id_kelas'] == $row['id_kelas']) ? 'selected' : '' ?>><?= $row['nama'] ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
@@ -132,7 +98,7 @@ if (isset($_POST['edit_guru'])) {
                         <input type="password" class="form-control" name="konfirmasi_password" id="konfirmasi_password">
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary" name="edit_guru">Ubah</button>
+                        <button type="submit" class="btn btn-primary" name="edit_siswa">Ubah</button>
                         <button type="reset" class="btn btn-secondary">Reset</button>
                     </div>
                 </form>

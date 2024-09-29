@@ -1,4 +1,9 @@
-<?php require_once 'config/const.php' ?>
+<?php
+
+session_start();
+require_once __DIR__ . '/../config/const.php';
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,21 +56,21 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
-                    </a><!-- End Profile Iamge Icon -->
+                        <img src="img/profile_kosong.jpeg" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2"><?= $_SESSION['nama'] ?></span>
+                    </a>
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Kevin Anderson</h6>
-                            <span>Admin</span>
+                            <h6><?= $_SESSION['nama'] ?></h6>
+                            <span><?= $_SESSION['role'] ?></span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                            <a class="dropdown-item d-flex align-items-center" href="profile.php?id_pengguna=<?= $_SESSION['id_pengguna'] ?>">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
                             </a>
@@ -114,24 +119,24 @@
                         </a>
                     </li>
                     <li>
-                        <a href="components-accordion.html">
+                        <a href="siswa.php">
                             <i class="bi bi-circle"></i><span>Siswa</span>
                         </a>
                     </li>
                 </ul>
             </li>
 
-            <!-- Pengingat Page Nav -->
+            <!-- Pemberitahuan Page Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
+                <a class="nav-link collapsed" href="pemberitahuan.php">
                     <i class="bi bi-app-indicator"></i>
-                    <span>Pengingat</span>
+                    <span>Pemberitahuan</span>
                 </a>
             </li>
 
             <!-- Kelas Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
+                <a class="nav-link collapsed" href="kelas.php">
                     <i class="bi bi-door-open"></i>
                     <span>Kelas</span>
                 </a>
