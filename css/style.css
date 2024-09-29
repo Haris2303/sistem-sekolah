@@ -62,9 +62,15 @@ h6 {
 
 .pagetitle h1 {
   font-size: 24px;
-  margin-bottom: 0;
+  margin-bottom: 1;
   font-weight: 600;
   color: #012970;
+}
+
+.pagetitle span {
+  display: inline-block;
+  font-size: 0.8rem;
+  line-height: 1.5;
 }
 
 /*--------------------------------------------------------------

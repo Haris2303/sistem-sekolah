@@ -1,4 +1,7 @@
-<?php require_once 'template/dashboard_navbar.php' ?>
+<?php
+$title = 'Home';
+require_once 'template/dashboard_navbar.php';
+?>
 
 <main id="main" class="main">
 

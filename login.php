@@ -1,4 +1,13 @@
-<?php require_once 'config/config.php' ?>
+<?php
+
+require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/service/auth.php';
+
+// ketika login
+if (isset($_POST['login'])) {
+    login($_POST);
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +50,7 @@
                                     <h5 class="card-title pb-0 fs-4">Login</h5>
                                 </div>
 
-                                <form action="service/auth.php" class="row g-3" method="post">
+                                <form action="login.php" class="row g-3" method="post">
 
                                     <div class="col-12">
                                         <label for="yourUsername" class="form-label">Username</label>

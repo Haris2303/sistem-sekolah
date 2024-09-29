@@ -1,0 +1,54 @@
+<?php
+$title = 'Guru';
+
+require_once __DIR__ . '/template/dashboard_navbar.php';
+require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/service/guru.php';
+
+?>
+
+<main id="main" class="main">
+    <div class="pagetitle mb-3">
+        <h1>Guru</h1>
+        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, totam ducimus! Quidem harum quos recusandae sed nihil consequatur impedit esse quaerat. Quasi ad possimus cupiditate suscipit nulla. Molestias, earum impedit?</span>
+    </div>
+
+    <div class="row text-end">
+        <div class="col">
+            <a href="#" class="btn btn-secondary">Generate</a>
+            <a href="guru_tambah.php" class="btn btn-primary">Tambah Data</a>
+        </div>
+    </div>
+
+    <table class="table datatable">
+        <thead>
+            <tr>
+                <th>Foto</th>
+                <th>Nama</th>
+                <th>Jenis Kelamin</th>
+                <th>Bidang Studi</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach (listGuru() as $row): ?>
+                <tr class="align-middle">
+                    <td><img src="img/guru/<?= $row['photo'] ?>" alt="Profil" style="width: 5rem;"></td>
+                    <td><?= $row['nama'] ?></td>
+                    <td><?= $row['jenis_kelamin'] ?></td>
+                    <td><?= $row['bidang_studi'] ?></td>
+                    <td>
+                        <a href="guru_edit.php?id_pengguna=<?= $row['id_pengguna'] ?>" class="btn btn-success btn-sm">Edit</a>
+                        <a href="guru_delete.php?id_pengguna=<?= $row['id_pengguna'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+
+</main>
+
+<script src="vendor/simple-datatables/simple-datatables.js"></script>
+<script src="vendor/tinymce/tinymce.min.js"></script>
+
+<?php require_once 'template/dashboard_footer.php' ?>
