@@ -21,6 +21,28 @@ function selectSiswaById($id_pengguna)
     return $result->fetch_assoc();
 }
 
+function selectSiswaByKelas($id_kelas)
+{
+    global $conn;
+    $sql = "SELECT 
+            pengguna.id_pengguna AS id_pengguna,
+            pengguna.nama AS nama_pengguna,
+            pengguna.email AS email_pengguna,
+            pengguna.username AS username_pengguna,
+            siswa.id_siswa AS id_siswa,
+            siswa.photo AS photo_siswa,
+            siswa.nipd AS nipd_siswa,
+            siswa.jenis_kelamin AS jenis_kelamin_siswa,
+            siswa.id_kelas AS id_kelas_siswa,
+            kelas.id_kelas AS id_kelas,
+            kelas.nama AS nama_kelas 
+            FROM pengguna 
+            JOIN siswa ON siswa.id_pengguna = pengguna.id_pengguna
+            JOIN kelas ON siswa.id_kelas = kelas.id_kelas
+            WHERE kelas.id_kelas = $id_kelas";
+    return $conn->query($sql);
+}
+
 function tambahSiswa($data, $id_pengguna)
 {
     global $conn;

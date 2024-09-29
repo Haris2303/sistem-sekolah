@@ -107,40 +107,56 @@ require_once __DIR__ . '/../config/const.php';
                 </a>
             </li>
 
-            <!-- Users Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#users-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-people"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="users-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="guru.php">
-                            <i class="bi bi-circle"></i><span>Guru</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="siswa.php">
-                            <i class="bi bi-circle"></i><span>Siswa</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            <?php if ($_SESSION['role'] === 'admin'): ?>
+                <!-- Users Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#users-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-people"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="users-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="guru.php">
+                                <i class="bi bi-circle"></i><span>Guru</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="siswa.php">
+                                <i class="bi bi-circle"></i><span>Siswa</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <?php endif ?>
 
-            <!-- Pemberitahuan Page Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pemberitahuan.php">
-                    <i class="bi bi-app-indicator"></i>
-                    <span>Pemberitahuan</span>
-                </a>
-            </li>
+            <?php if ($_SESSION['role'] !== 'guru'): ?>
+                <!-- Pemberitahuan Page Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="pemberitahuan.php">
+                        <i class="bi bi-app-indicator"></i>
+                        <span>Pemberitahuan</span>
+                    </a>
+                </li>
+            <?php endif ?>
 
-            <!-- Kelas Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="kelas.php">
-                    <i class="bi bi-door-open"></i>
-                    <span>Kelas</span>
-                </a>
-            </li>
+            <?php if ($_SESSION['role'] !== 'admin'): ?>
+                <!-- Ruang Pembelajaran Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="ruang_pembelajaran.php">
+                        <i class="bi bi-door-open"></i>
+                        <span>Ruang Pembelajaran</span>
+                    </a>
+                </li>
+            <?php endif ?>
+
+            <?php if ($_SESSION['role'] === 'admin'): ?>
+                <!-- Kelas Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="kelas.php">
+                        <i class="bi bi-door-open"></i>
+                        <span>Kelas</span>
+                    </a>
+                </li>
+            <?php endif ?>
 
             <!-- Logout Nav -->
             <li class="nav-item">

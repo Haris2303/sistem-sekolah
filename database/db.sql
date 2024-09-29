@@ -50,6 +50,7 @@ CREATE TABLE siswa (
 -- Table Ruang Pembelajaran
 CREATE TABLE ruang_pembelajaran (
     id_ruang INT PRIMARY KEY AUTO_INCREMENT,
+    image VARCHAR(100) NOT NULL,
     nama VARCHAR(100) NOT NULL,
     id_guru INT NOT NULL,
     id_kelas INT NOT NULL,
