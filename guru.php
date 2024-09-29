@@ -5,6 +5,25 @@ require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/guru.php';
 
+// ketika hapus ditekan
+if (isset($_POST['hapus'])) {
+    if (hapusGuruById($_POST['id_pengguna'])) {
+        echo "
+        <script>
+            alert('User berhasil dihapus')
+            document.location.href = '" . BASE_URL . "/guru.php'
+        </script>";
+        exit;
+    } else {
+        echo "
+        <script>
+            alert('User gagal dihapus')
+            document.location.href = '" . BASE_URL . "/guru.php'
+        </script>";
+        exit;
+    }
+}
+
 ?>
 
 <main id="main" class="main">
@@ -39,7 +58,10 @@ require_once __DIR__ . '/service/guru.php';
                     <td><?= $row['bidang_studi'] ?></td>
                     <td>
                         <a href="guru_edit.php?id_pengguna=<?= $row['id_pengguna'] ?>" class="btn btn-success btn-sm">Edit</a>
-                        <a href="guru_delete.php?id_pengguna=<?= $row['id_pengguna'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+                        <form action="" method="post" class="d-inline">
+                            <input type="hidden" name="id_pengguna" value="<?= $row['id_pengguna'] ?>">
+                            <button type="submit" class="btn btn-danger btn-sm" name="hapus" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
+                        </form>
                     </td>
                 </tr>
             <?php endforeach ?>

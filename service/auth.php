@@ -203,3 +203,10 @@ function editPenggunaById($id_pengguna, $data, $redirect)
 
     $conn->query($sql);
 }
+
+function hapusPenggunaById($id_pengguna)
+{
+    global $conn;
+    $sql = "DELETE FROM pengguna WHERE id_pengguna = $id_pengguna";
+    $conn->query($sql);
+}

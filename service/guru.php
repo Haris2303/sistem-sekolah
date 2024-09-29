@@ -58,11 +58,6 @@ function editGuruById($id_pengguna, $data)
     $bidang_sertifikasi = $data['bidang_sertifikasi'];
     $jabatan = $data['jabatan'];
     $tugas_tambahan = $data['tugas_tambahan'];
-    $name = $data['name'];
-    $email = $data['email'];
-    $username = $data['username'];
-    $password = $data['password'];
-    $konfirmasi_password = $data['konfirmasi_password'];
     $photo_lama = $data['photo_lama'];
 
     if ($_FILES['photo']['error'] === 4) {
@@ -102,6 +97,42 @@ function editGuruById($id_pengguna, $data)
         </script>";
         exit;
     }
+
+    return $record;
+}
+
+function hapusGuruById($id_pengguna)
+{
+    global $conn;
+
+    // pastikan data guru dan pengguna terhapus
+    try {
+        $conn->autocommit(false);
+
+        // dapatkan data foto
+        $photo = selectGuruById($id_pengguna)['photo'];
+
+        // hapus data guru
+        $sql = "DELETE FROM guru WHERE id_pengguna = $id_pengguna";
+        $conn->query($sql);
+
+        // hapus data pengguna
+        hapusPenggunaById($id_pengguna);
+
+        $record = $conn->affected_rows;
+
+        $conn->commit();
+    } catch (Exception $e) {
+        echo "
+        <script>
+            alert('Error: " . $e->getMessage() . "')
+            document.location.href = '" . BASE_URL . "/guru.php'
+        </script>";
+        exit;
+    }
+
+    // hapus file foto pada folder img/guru
+    unlink(__DIR__ . '/../img/guru/' . $photo);
 
     return $record;
 }
