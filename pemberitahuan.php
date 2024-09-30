@@ -5,6 +5,8 @@ require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/pemberitahuan.php';
 
+ob_start();
+
 // ketika hapus ditekan
 if (isset($_POST['hapus'])) {
     if (hapusPemberitahuan($_POST['id_pemberitahuan'])) {
@@ -24,6 +26,12 @@ if (isset($_POST['hapus'])) {
     }
 }
 
+if (isset($_POST['edit_dibaca'])) {
+    editDibacaById($_POST['id_pemberitahuan']);
+    echo "<script>window.location.href = 'lihat_pesan.php?id_pemberitahuan=" . $_POST['id_pemberitahuan'] . "';</script>";
+    exit;
+}
+
 ?>
 
 <main id="main" class="main">
@@ -32,11 +40,13 @@ if (isset($_POST['hapus'])) {
         <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, totam ducimus! Quidem harum quos recusandae sed nihil consequatur impedit esse quaerat. Quasi ad possimus cupiditate suscipit nulla. Molestias, earum impedit?</span>
     </div>
 
-    <div class="row text-end">
-        <div class="col">
-            <a href="pemberitahuan_tambah.php" class="btn btn-primary">Buat Pemberitahuan</a>
+    <?php if ($_SESSION['role'] === 'admin'): ?>
+        <div class="row text-end">
+            <div class="col">
+                <a href="pemberitahuan_tambah.php" class="btn btn-primary">Buat Pemberitahuan</a>
+            </div>
         </div>
-    </div>
+    <?php endif ?>
 
     <table class="table datatable">
         <thead>
@@ -56,7 +66,14 @@ if (isset($_POST['hapus'])) {
                     <td><?= $row['waktu'] ?></td>
                     <td><?= ($row['dibaca']) ? 'Telah dibaca' : 'Belum dibaca' ?></td>
                     <td>
-                        <a href="lihat_pesan.php?id_pemberitahuan=<?= $row['id_pemberitahuan'] ?>" class="btn btn-primary btn-sm">Lihat</a>
+                        <?php if ($_SESSION['role'] === 'siswa'): ?>
+                            <form action="" method="post" class="d-inline">
+                                <input type="hidden" name="id_pemberitahuan" value="<?= $row['id_pemberitahuan'] ?>">
+                                <button type="submit" class="btn btn-primary btn-sm" name="edit_dibaca">Lihat</button>
+                            </form>
+                        <?php else: ?>
+                            <a href="lihat_pesan.php?id_pemberitahuan=<?= $row['id_pemberitahuan'] ?>" class="btn btn-primary btn-sm">Lihat</a>
+                        <?php endif ?>
                         <form action="" method="post" class="d-inline">
                             <input type="hidden" name="id_pemberitahuan" value="<?= $row['id_pemberitahuan'] ?>">
                             <button type="submit" class="btn btn-danger btn-sm" name="hapus" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>

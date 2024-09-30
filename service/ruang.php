@@ -3,12 +3,30 @@
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/materi.php';
 
-function listRuang()
+function listRuangByIdGuru($id_guru)
 {
     global $conn;
-    $sql = "SELECT ruang_pembelajaran.*, kelas.nama as `nama_kelas`
+    $sql = "SELECT 
+            ruang_pembelajaran.id_ruang,
+            ruang_pembelajaran.image,
+            ruang_pembelajaran.nama AS nama_ruang,
+            ruang_pembelajaran.id_kelas,
+            kelas.nama AS nama_kelas,
+            guru.id_guru,
+            guru.photo,
+            guru.nip,
+            guru.nuptk,
+            guru.nrg,
+            guru.jenis_kelamin,
+            guru.bidang_studi,
+            guru.bidang_sertifikasi,
+            guru.jabatan,
+            guru.tugas_tambahan,
+            guru.id_pengguna
             FROM ruang_pembelajaran
-            JOIN kelas ON ruang_pembelajaran.id_kelas = kelas.id_kelas";
+            JOIN kelas ON ruang_pembelajaran.id_kelas = kelas.id_kelas
+            JOIN guru ON ruang_pembelajaran.id_guru = guru.id_guru
+            WHERE guru.id_guru = $id_guru";
     return $conn->query($sql);
 }
 

@@ -23,6 +23,13 @@ function selectPemberitahuanById($id_pemberituan)
     return $conn->query($sql)->fetch_assoc();
 }
 
+function selectPemberitahuanByIdSiswa($id_siswa)
+{
+    global $conn;
+    $sql = "SELECT * FROM pemberitahuan WHERE id_siswa = $id_siswa AND dibaca = false";
+    return $conn->query($sql);
+}
+
 function tambahPemberitahuan($data)
 {
     global $conn;
@@ -43,6 +50,14 @@ function hapusPemberitahuan($id_pemberitahuan)
 {
     global $conn;
     $sql = "DELETE FROM pemberitahuan WHERE id_pemberitahuan = $id_pemberitahuan";
+    $conn->query($sql);
+    return $conn->affected_rows;
+}
+
+function editDibacaById($id_pemberitahuan)
+{
+    global $conn;
+    $sql = "UPDATE pemberitahuan SET dibaca = true WHERE id_pemberitahuan = $id_pemberitahuan";
     $conn->query($sql);
     return $conn->affected_rows;
 }

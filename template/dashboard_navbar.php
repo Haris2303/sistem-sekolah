@@ -1,7 +1,14 @@
 <?php
 
-session_start();
 require_once __DIR__ . '/../config/const.php';
+require_once __DIR__ . '/../service/pemberitahuan.php';
+require_once __DIR__ . '/../service/siswa.php';
+
+$jumlah_pemberitahuan = 0;
+if ($_SESSION['role'] === 'siswa') {
+    $siswa = selectSiswaById($_SESSION['id_pengguna']);
+    $jumlah_pemberitahuan = selectPemberitahuanByIdSiswa($siswa['id_siswa'])->num_rows;
+}
 
 ?>
 
@@ -135,7 +142,12 @@ require_once __DIR__ . '/../config/const.php';
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="pemberitahuan.php">
                         <i class="bi bi-app-indicator"></i>
-                        <span>Pemberitahuan</span>
+                        <div class="d-flex gap-3">
+                            <span>Pemberitahuan</span>
+                            <?php if ($jumlah_pemberitahuan > 0): ?>
+                                <span class="badge text-bg-danger rounded-circle"><?= $jumlah_pemberitahuan ?></span>
+                            <?php endif ?>
+                        </div>
                     </a>
                 </li>
             <?php endif ?>
