@@ -1,7 +1,8 @@
 <?php
 $nama_file = $_GET['file'];
+$folder = $_GET['folder'];
 
-$file = 'file/materi/' . $nama_file;
+$file = 'file/' . $folder . '/' . $nama_file;
 
 if (file_exists($file)) {
     header('Content-Type: application/pdf');

@@ -54,6 +54,8 @@ function hapusRuangById($id_ruang)
     // pastikan dua table tersebut dieksekusi dengan sukses
     $record = 0;
     try {
+        $conn->autocommit(false);
+
         // dapatkan semua data materi berdasarkan id_ruang
         $materi = selectMateriByIdRuang($id_ruang);
 
@@ -70,6 +72,8 @@ function hapusRuangById($id_ruang)
         foreach ($materi as $m) {
             unlink(__DIR__ . '/../file/materi/' . $m['file']);
         }
+
+        $conn->commit();
     } catch (Exception $e) {
         echo "<script>
                 alert('Error: " . $e->getMessage() . "')

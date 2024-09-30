@@ -6,6 +6,7 @@ require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/siswa.php';
 require_once __DIR__ . '/service/ruang.php';
 require_once __DIR__ . '/service/materi.php';
+require_once __DIR__ . '/service/tugas.php';
 
 $id_ruang = $_GET['id_ruang'];
 $ruang = selectRuangById($id_ruang);
@@ -50,7 +51,7 @@ if (isset($_POST['hapus_ruang'])) {
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5>Test Siswa</h5>
                     <div class="text-end">
-                        <a href="ruang_tambah.php" class="btn btn-primary">Buat Test</a>
+                        <a href="buat_test.php?id_ruang=<?= $id_ruang ?>" class="btn btn-primary">Buat Test</a>
                     </div>
                 </div>
 
@@ -60,20 +61,21 @@ if (isset($_POST['hapus_ruang'])) {
                             <th>Judul</th>
                             <th>Deadline</th>
                             <th>Siswa Kerjakan</th>
-                            <th>Aksi</th>
+                            <th class="text-center">Aksi</th>
                             <th class="d-none">Column Tambahan</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach (listGuru() as $row): ?>
+                        <?php foreach (selectTugasByIdRuang($id_ruang) as $row): ?>
                             <tr class="align-middle">
-                                <td>test</td>
-                                <td><?= $row['nama'] ?></td>
-                                <td><?= $row['jenis_kelamin'] ?></td>
+                                <td><?= $row['judul'] ?></td>
+                                <td><?= $row['deadline'] ?></td>
+                                <td><?= $row['jumlah_diserahkan'] ?></td>
                                 <td>
-                                    <a href="guru_edit.php?id_pengguna=<?= $row['id_pengguna'] ?>" class="btn btn-success badge">Edit</a>
+                                    <a href="lihat_file.php?file=<?= $row['file'] ?>&folder=tugas" class="btn btn-secondary badge">Lihat File</a>
+                                    <a href="lihat_file.php?file=<?= $row['file'] ?>" class="btn btn-primary badge">Detail</a>
                                     <form action="" method="post" class="d-inline">
-                                        <input type="hidden" name="id_pengguna" value="<?= $row['id_pengguna'] ?>">
+                                        <input type="hidden" name="id_tugas" value="<?= $row['id_tugas'] ?>">
                                         <button type="submit" class="btn btn-danger badge" name="hapus" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
                                     </form>
                                 </td>
@@ -107,7 +109,7 @@ if (isset($_POST['hapus_ruang'])) {
                                 <td><?= $row['judul'] ?></td>
                                 <td><?= $row['tanggal'] ?></td>
                                 <td>
-                                    <a href="lihat_file.php?file=<?= $row['file'] ?>" class="btn btn-primary badge">Lihat</a>
+                                    <a href="lihat_file.php?file=<?= $row['file'] ?>&folder=materi" class="btn btn-primary badge">Lihat</a>
                                     <form action="" method="post" class="d-inline">
                                         <input type="hidden" name="id_materi" value="<?= $row['id_materi'] ?>">
                                         <button type="submit" class="btn btn-danger badge" name="hapus" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
