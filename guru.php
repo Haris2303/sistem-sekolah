@@ -70,7 +70,4 @@ if (isset($_POST['hapus'])) {
 
 </main>
 
-<script src="vendor/simple-datatables/simple-datatables.js"></script>
-<script src="vendor/tinymce/tinymce.min.js"></script>
-
 <?php require_once __DIR__ . '/template/dashboard_footer.php' ?>

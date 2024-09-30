@@ -35,6 +35,8 @@ require_once __DIR__ . '/../config/const.php';
 
     <!-- Template Main CSS File -->
     <link href="css/style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css" />
 </head>
 
 <body>

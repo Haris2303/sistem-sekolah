@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/materi.php';
 
 function listRuang()
 {
@@ -44,4 +45,36 @@ function tambahRuang($data)
     $conn->query($sql);
 
     return $conn->affected_rows;
+}
+
+function hapusRuangById($id_ruang)
+{
+    global $conn;
+
+    // pastikan dua table tersebut dieksekusi dengan sukses
+    $record = 0;
+    try {
+        // dapatkan semua data materi berdasarkan id_ruang
+        $materi = selectMateriByIdRuang($id_ruang);
+
+        // hapus materi berdasarkan id ruang
+        $sql = "DELETE FROM materi WHERE id_ruang = $id_ruang";
+        $conn->query($sql);
+        $record = $conn->affected_rows;
+
+        $sql = "DELETE FROM ruang_pembelajaran WHERE id_ruang = $id_ruang";
+        $conn->query($sql);
+        $record .= $conn->affected_rows;
+
+        // hapus semua file yang belum terhapus
+        foreach ($materi as $m) {
+            unlink(__DIR__ . '/../file/materi/' . $m['file']);
+        }
+    } catch (Exception $e) {
+        echo "<script>
+                alert('Error: " . $e->getMessage() . "')
+            </script>";
+    }
+
+    return $record;
 }

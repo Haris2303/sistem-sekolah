@@ -7,34 +7,40 @@ require_once __DIR__ . '/service/siswa.php';
 require_once __DIR__ . '/service/ruang.php';
 require_once __DIR__ . '/service/materi.php';
 
+$id_ruang = $_GET['id_ruang'];
+$ruang = selectRuangById($id_ruang);
+$siswa = selectSiswaByKelas($ruang['id_kelas']);
+
 // ketika hapus ditekan
-if (isset($_POST['hapus'])) {
-    if (hapusGuruById($_POST['id_pengguna'])) {
+if (isset($_POST['hapus_ruang'])) {
+    if (hapusRuangById($_POST['id_ruang'])) {
         echo "
         <script>
-            alert('User berhasil dihapus')
-            document.location.href = '" . BASE_URL . "/guru.php'
+            alert('Ruang berhasil dihapus')
+            document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('User gagal dihapus')
-            document.location.href = '" . BASE_URL . "/guru.php'
+            alert('Ruang gagal dihapus')
+            document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php'
         </script>";
         exit;
     }
 }
 
-$id_ruang = $_GET['id_ruang'];
-$ruang = selectRuangById($id_ruang);
-$siswa = selectSiswaByKelas($ruang['id_kelas']);
-
 ?>
 
 <main id="main" class="main">
     <div class="pagetitle mb-3">
-        <h1>Guru</h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Ruang Pembelajaran | <?= $ruang['nama'] ?></h1>
+            <form action="" method="POST">
+                <input type="hidden" name="id_ruang" value="<?= $id_ruang ?>">
+                <button type="submit" name="hapus_ruang" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus ruang ini?')">Hapus Ruang</button>
+            </form>
+        </div>
         <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, totam ducimus! Quidem harum quos recusandae sed nihil consequatur impedit esse quaerat. Quasi ad possimus cupiditate suscipit nulla. Molestias, earum impedit?</span>
     </div>
 
@@ -44,9 +50,10 @@ $siswa = selectSiswaByKelas($ruang['id_kelas']);
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5>Test Siswa</h5>
                     <div class="text-end">
-                        <a href="ruang_tambah.php" class="btn btn-primary">Buat Ruang</a>
+                        <a href="ruang_tambah.php" class="btn btn-primary">Buat Test</a>
                     </div>
                 </div>
+
                 <table class="table datatable">
                     <thead>
                         <tr>
@@ -54,6 +61,7 @@ $siswa = selectSiswaByKelas($ruang['id_kelas']);
                             <th>Deadline</th>
                             <th>Siswa Kerjakan</th>
                             <th>Aksi</th>
+                            <th class="d-none">Column Tambahan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,12 +71,13 @@ $siswa = selectSiswaByKelas($ruang['id_kelas']);
                                 <td><?= $row['nama'] ?></td>
                                 <td><?= $row['jenis_kelamin'] ?></td>
                                 <td>
-                                    <a href="guru_edit.php?id_pengguna=<?= $row['id_pengguna'] ?>" class="btn btn-success btn-sm">Edit</a>
+                                    <a href="guru_edit.php?id_pengguna=<?= $row['id_pengguna'] ?>" class="btn btn-success badge">Edit</a>
                                     <form action="" method="post" class="d-inline">
                                         <input type="hidden" name="id_pengguna" value="<?= $row['id_pengguna'] ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm" name="hapus" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
+                                        <button type="submit" class="btn btn-danger badge" name="hapus" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
                                     </form>
                                 </td>
+                                <th class="d-none">Column Tambahan</th>
                             </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -88,6 +97,8 @@ $siswa = selectSiswaByKelas($ruang['id_kelas']);
                             <th>Judul</th>
                             <th>Tanggal Upload</th>
                             <th>Aksi</th>
+                            <th class="d-none">Column Tambahan</th>
+                            <th class="d-none">Column Tambahan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,11 +107,14 @@ $siswa = selectSiswaByKelas($ruang['id_kelas']);
                                 <td><?= $row['judul'] ?></td>
                                 <td><?= $row['tanggal'] ?></td>
                                 <td>
+                                    <a href="lihat_file.php?file=<?= $row['file'] ?>" class="btn btn-primary badge">Lihat</a>
                                     <form action="" method="post" class="d-inline">
                                         <input type="hidden" name="id_materi" value="<?= $row['id_materi'] ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm" name="hapus" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
+                                        <button type="submit" class="btn btn-danger badge" name="hapus" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
                                     </form>
                                 </td>
+                                <th class="d-none">Column Tambahan</th>
+                                <th class="d-none">Column Tambahan</th>
                             </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -141,8 +155,5 @@ $siswa = selectSiswaByKelas($ruang['id_kelas']);
     </div>
 
 </main>
-
-<script src="vendor/simple-datatables/simple-datatables.js"></script>
-<script src="vendor/tinymce/tinymce.min.js"></script>
 
 <?php require_once __DIR__ . '/template/dashboard_footer.php' ?>
