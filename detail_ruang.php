@@ -3,8 +3,9 @@ $title = 'Guru';
 
 require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
-require_once __DIR__ . '/service/guru.php';
+require_once __DIR__ . '/service/siswa.php';
 require_once __DIR__ . '/service/ruang.php';
+require_once __DIR__ . '/service/materi.php';
 
 // ketika hapus ditekan
 if (isset($_POST['hapus'])) {
@@ -78,7 +79,7 @@ $siswa = selectSiswaByKelas($ruang['id_kelas']);
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5>Materi</h5>
                     <div class="text-end">
-                        <a href="ruang_tambah.php" class="btn btn-primary">Share Materi</a>
+                        <a href="share_materi.php?id_ruang=<?= $id_ruang ?>" class="btn btn-primary">Share Materi</a>
                     </div>
                 </div>
                 <table class="table datatable">
@@ -90,14 +91,13 @@ $siswa = selectSiswaByKelas($ruang['id_kelas']);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach (listGuru() as $row): ?>
+                        <?php foreach (selectMateriByIdRuang($id_ruang) as $row): ?>
                             <tr class="align-middle">
-                                <td>test</td>
-                                <td><?= $row['nama'] ?></td>
+                                <td><?= $row['judul'] ?></td>
+                                <td><?= $row['tanggal'] ?></td>
                                 <td>
-                                    <a href="guru_edit.php?id_pengguna=<?= $row['id_pengguna'] ?>" class="btn btn-success btn-sm">Edit</a>
                                     <form action="" method="post" class="d-inline">
-                                        <input type="hidden" name="id_pengguna" value="<?= $row['id_pengguna'] ?>">
+                                        <input type="hidden" name="id_materi" value="<?= $row['id_materi'] ?>">
                                         <button type="submit" class="btn btn-danger btn-sm" name="hapus" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
                                     </form>
                                 </td>

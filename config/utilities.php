@@ -50,3 +50,50 @@ function upload($folderName)
 
   return $namaFileBaru;
 }
+
+function uploadFilePDF($folderName)
+{
+  // ambil data files
+  $namaFile = $_FILES['file']['name'];
+  $ukuranFile = $_FILES['file']['size'];
+  $errorFile = $_FILES['file']['error'];
+  $tmpName = $_FILES['file']['tmp_name'];
+
+  // cek apakah tidak ada file yang di upload
+  if ($errorFile === 4) {
+    echo "<script>
+        alert('Anda tidak memasukkan file,
+        Silahkan masukkan!');
+      </script>";
+    return false;
+  }
+
+  // cek apakah yg diupload adalah file pdf
+  $ekstensiGambarValid = ['pdf'];
+  $ekstensiGambar = explode('.', $namaFile);
+  $ekstensiGambar = strtolower(end($ekstensiGambar));
+  if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
+    echo "<script>
+        alert('Yang anda upload bukan file pdf,
+        Silahkan masukkan file berbentuk PDF!');
+      </script>";
+    return false;
+  }
+
+  // cek ukuran dari file yang diupload
+  if ($ukuranFile > 5000000) {
+    echo "<script>
+        alert('Ukuran file terlalu besar, Silahkan masukkan kurang dari 5mb!');
+      </script>";
+    return false;
+  }
+
+  // generate nama file baru, gambar siap di upload
+  $namaFileBaru = uniqid();
+  $namaFileBaru .= '.';
+  $namaFileBaru .= $ekstensiGambar;
+
+  move_uploaded_file($tmpName, __DIR__ . '/../file/' . $folderName . '/' . $namaFileBaru);
+
+  return $namaFileBaru;
+}
