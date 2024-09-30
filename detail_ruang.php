@@ -31,6 +31,44 @@ if (isset($_POST['hapus_ruang'])) {
     }
 }
 
+// ketika hapus tugas ditekan
+if (isset($_POST['hapus_tugas'])) {
+    if (hapusTugas($_POST['id_tugas'])) {
+        echo "
+        <script>
+            alert('Tugas berhasil dihapus')
+            document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "'
+        </script>";
+        exit;
+    } else {
+        echo "
+        <script>
+            alert('Tugas gagal dihapus')
+            document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php?id_ruang=" . $id_ruang . "'
+        </script>";
+        exit;
+    }
+}
+
+// ketika hapus materi ditekan
+if (isset($_POST['hapus_materi'])) {
+    if (hapusMateri($_POST['id_materi'])) {
+        echo "
+        <script>
+            alert('Materi berhasil dihapus')
+            document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "'
+        </script>";
+        exit;
+    } else {
+        echo "
+        <script>
+            alert('Materi gagal dihapus')
+            document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php?id_ruang=" . $id_ruang . "'
+        </script>";
+        exit;
+    }
+}
+
 ?>
 
 <main id="main" class="main">
@@ -72,11 +110,10 @@ if (isset($_POST['hapus_ruang'])) {
                                 <td><?= $row['deadline'] ?></td>
                                 <td><?= $row['jumlah_diserahkan'] ?></td>
                                 <td>
-                                    <a href="lihat_file.php?file=<?= $row['file'] ?>&folder=tugas" class="btn btn-secondary badge">Lihat File</a>
-                                    <a href="lihat_file.php?file=<?= $row['file'] ?>" class="btn btn-primary badge">Detail</a>
+                                    <a href="penilaian_test.php?id_tugas=<?= $row['id_tugas'] ?>" class="btn btn-primary badge">Penilaian</a>
                                     <form action="" method="post" class="d-inline">
                                         <input type="hidden" name="id_tugas" value="<?= $row['id_tugas'] ?>">
-                                        <button type="submit" class="btn btn-danger badge" name="hapus" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
+                                        <button type="submit" class="btn btn-danger badge" name="hapus_tugas" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
                                     </form>
                                 </td>
                                 <th class="d-none">Column Tambahan</th>
@@ -112,7 +149,7 @@ if (isset($_POST['hapus_ruang'])) {
                                     <a href="lihat_file.php?file=<?= $row['file'] ?>&folder=materi" class="btn btn-primary badge">Lihat</a>
                                     <form action="" method="post" class="d-inline">
                                         <input type="hidden" name="id_materi" value="<?= $row['id_materi'] ?>">
-                                        <button type="submit" class="btn btn-danger badge" name="hapus" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
+                                        <button type="submit" class="btn btn-danger badge" name="hapus_materi" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
                                     </form>
                                 </td>
                                 <th class="d-none">Column Tambahan</th>
@@ -130,22 +167,6 @@ if (isset($_POST['hapus_ruang'])) {
                 </div>
                 <ul class="list-group">
                     <?php foreach ($siswa as $row): ?>
-                        <li class="list-group-item d-flex align-items-center border-0">
-                            <img src="img/siswa/<?= $row['photo_siswa'] ?>" class="rounded-circle bg-light" style="width: 40px; height: 40px;"></img>
-                            <span class="ms-3"><?= $row['nama_pengguna'] ?></span>
-                        </li>
-                        <li class="list-group-item d-flex align-items-center border-0">
-                            <img src="img/siswa/<?= $row['photo_siswa'] ?>" class="rounded-circle bg-light" style="width: 40px; height: 40px;"></img>
-                            <span class="ms-3"><?= $row['nama_pengguna'] ?></span>
-                        </li>
-                        <li class="list-group-item d-flex align-items-center border-0">
-                            <img src="img/siswa/<?= $row['photo_siswa'] ?>" class="rounded-circle bg-light" style="width: 40px; height: 40px;"></img>
-                            <span class="ms-3"><?= $row['nama_pengguna'] ?></span>
-                        </li>
-                        <li class="list-group-item d-flex align-items-center border-0">
-                            <img src="img/siswa/<?= $row['photo_siswa'] ?>" class="rounded-circle bg-light" style="width: 40px; height: 40px;"></img>
-                            <span class="ms-3"><?= $row['nama_pengguna'] ?></span>
-                        </li>
                         <li class="list-group-item d-flex align-items-center border-0">
                             <img src="img/siswa/<?= $row['photo_siswa'] ?>" class="rounded-circle bg-light" style="width: 40px; height: 40px;"></img>
                             <span class="ms-3"><?= $row['nama_pengguna'] ?></span>

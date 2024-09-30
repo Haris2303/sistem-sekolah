@@ -11,6 +11,13 @@ function selectTugasByIdRuang($id_ruang)
     return $conn->query($sql);
 }
 
+function selectTugasById($id_tugas)
+{
+    global $conn;
+    $sql = "SELECT * FROM tugas WHERE id_tugas = $id_tugas";
+    return $conn->query($sql)->fetch_assoc();
+}
+
 function tambahTugas($data)
 {
     global $conn;
@@ -53,6 +60,39 @@ function tambahTugas($data)
             tambahPengumpulan($s['id_siswa'], $id_tugas_last);
             $record .= $conn->affected_rows;
         }
+
+        $conn->commit();
+    } catch (Exception $e) {
+        echo "<script>
+                alert('Error: " . $e->getMessage() . "')
+            </script>";
+    }
+
+    return $record;
+}
+
+function hapusTugas($id_tugas)
+{
+    global $conn;
+
+    $record = 0;
+    try {
+        $conn->autocommit(false);
+
+        // hapus data pengumpulan
+        $record = hapusPengumpulanByIdTugas($id_tugas);
+
+        // dapatkan nama file untuk dihapus
+        $nama_file = selectTugasById($id_tugas)['file'];
+
+        // hapus data tugas
+        $sql = "DELETE FROM tugas WHERE id_tugas = $id_tugas";
+        $conn->query($sql);
+
+        $record .= $conn->affected_rows;
+
+        // hapus file
+        unlink(__DIR__ . '/../file/tugas/' . $nama_file);
 
         $conn->commit();
     } catch (Exception $e) {

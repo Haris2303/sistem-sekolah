@@ -18,13 +18,13 @@ if (isset($_POST['buat_test'])) {
     if (tambahTugas($_POST)) {
         echo "
         <script>
-            alert('Materi berhasil dishare');
+            alert('Tugas berhasil dibuat');
             document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "';
         </script>";
     } else {
         echo "
         <script>
-            alert('Materi gagal dishare');
+            alert('Tugas gagal dibuat');
             document.location.href = '" . BASE_URL . "/share_materi.php?id_ruang=" . $id_ruang . "';
         </script>";
     }

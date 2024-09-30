@@ -3,7 +3,6 @@ $title = 'Pemberitahuan';
 
 require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
-require_once __DIR__ . '/service/pemberitahuan.php';
 require_once __DIR__ . '/service/ruang.php';
 
 // ketika hapus ditekan
