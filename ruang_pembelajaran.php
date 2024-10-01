@@ -1,5 +1,5 @@
 <?php
-$title = 'Pemberitahuan';
+$title = 'Ruang Pembelajaran';
 
 require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
@@ -42,7 +42,7 @@ if ($_SESSION['role'] === 'siswa') {
 <main id="main" class="main">
     <div class="pagetitle mb-3">
         <h1>Ruang Pembelajaran</h1>
-        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, totam ducimus! Quidem harum quos recusandae sed nihil consequatur impedit esse quaerat. Quasi ad possimus cupiditate suscipit nulla. Molestias, earum impedit?</span>
+        <span>Di ruang ini, siswa dapat mengakses sumber daya pembelajaran yang tersedia untuk mendukung kegiatan belajar seperti penugasan dan memberikan materi.</span>
     </div>
 
     <?php if ($_SESSION['role'] === 'guru'): ?>

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once 'const.php';
 
 // koneksi ke database

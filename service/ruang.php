@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/materi.php';
+require_once __DIR__ . '/guru.php';
 
 function listRuangByIdGuru($id_guru)
 {
@@ -51,6 +52,34 @@ function selectRuangById($id_ruang)
     $sql = "SELECT * FROM ruang_pembelajaran WHERE id_ruang = $id_ruang";
     $result = $conn->query($sql);
     return $result->fetch_assoc();
+}
+
+function cekRuang($id_ruang)
+{
+    $id_ruang = (int) $id_ruang;
+    if (!is_int($id_ruang) || !selectRuangById($id_ruang)) {
+        http_response_code(404);
+        include(__DIR__ . '/../404.php');
+        exit;
+    }
+}
+
+function cekAksesRuangByIdPengguna($id_pengguna, $id_ruang)
+{
+    // check id ruang apakah ada atau tidak, tampilkan 404 jika tidak
+    cekRuang($id_ruang);
+
+    $ruang = selectRuangById($id_ruang);
+
+    if ($_SESSION['role'] === 'guru') {
+        $guru = selectGuruById($id_pengguna);
+
+        return $guru['id_guru'] !== $ruang['id_guru'];
+    } else {
+        $siswa = selectSiswaById($id_pengguna);
+
+        return $siswa['id_siswa'] !== $ruang['id_kelas'];
+    }
 }
 
 function tambahRuang($data)

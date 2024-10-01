@@ -1,10 +1,14 @@
 <?php
 
-$title = 'Tambah Guru';
-
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/tugas.php';
+
+// jika yang akses adalah guru tampilkan 404
+if ($_SESSION['role'] === 'siswa') {
+    http_response_code(404);
+    include(__DIR__ . '/404.php');
+    exit;
+}
 
 // // jika ada id ruang dari method get
 if (isset($_GET['id_ruang'])) {
@@ -18,17 +22,20 @@ if (isset($_POST['buat_test'])) {
     if (tambahTugas($_POST)) {
         echo "
         <script>
-            alert('Tugas berhasil dibuat');
-            document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "';
+        alert('Tugas berhasil dibuat');
+        document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "';
         </script>";
     } else {
         echo "
         <script>
-            alert('Tugas gagal dibuat');
-            document.location.href = '" . BASE_URL . "/share_materi.php?id_ruang=" . $id_ruang . "';
+        alert('Tugas gagal dibuat');
+        document.location.href = '" . BASE_URL . "/share_materi.php?id_ruang=" . $id_ruang . "';
         </script>";
     }
 }
+
+$title = 'Buat Tugas / Test';
+require_once __DIR__ . '/template/dashboard_navbar.php';
 
 ?>
 

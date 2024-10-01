@@ -1,9 +1,14 @@
 <?php
-$title = 'Tambah Guru';
 
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/materi.php';
+
+// jika yang akses adalah guru tampilkan 404
+if ($_SESSION['role'] === 'siswa') {
+    http_response_code(404);
+    include(__DIR__ . '/404.php');
+    exit;
+}
 
 // jika ada id ruang dari method get
 if (isset($_GET['id_ruang'])) {
@@ -28,6 +33,9 @@ if (isset($_POST['tambah_materi'])) {
         </script>";
     }
 }
+
+$title = 'Share Materi';
+require_once __DIR__ . '/template/dashboard_navbar.php';
 
 ?>
 

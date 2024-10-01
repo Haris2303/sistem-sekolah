@@ -1,12 +1,26 @@
 <?php
-$title = 'Pemberitahuan';
 
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/tugas.php';
 require_once __DIR__ . '/service/pengumpulan.php';
 
-$id_tugas = $_GET['id_tugas'];
+// jika yang akses adalah guru tampilkan 404
+if ($_SESSION['role'] === 'siswa') {
+    include(__DIR__ . '/404.php');
+    exit;
+}
+
+$id_tugas = 0;
+if (isset($_GET['id_tugas'])) {
+    $id_tugas = $_GET['id_tugas'];
+}
+
+if (cekAksesTugasByIdPengguna($_SESSION['id_pengguna'], $id_tugas)) {
+    http_response_code(404);
+    include(__DIR__ . '/404.php');
+    exit;
+}
+
 $tugas = selectTugasById($id_tugas);
 
 // ketika kirim ditekan
@@ -14,19 +28,22 @@ if (isset($_POST['kirim_nilai'])) {
     if (menilaiPengumpulanById($_POST)) {
         echo "
         <script>
-            alert('Nilai telah diberikan')
-            document.location.href = '" . BASE_URL . "/penilaian_test.php?id_tugas=" . $id_tugas . "'
+        alert('Nilai telah diberikan')
+        document.location.href = '" . BASE_URL . "/penilaian_test.php?id_tugas=" . $id_tugas . "'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('Nilai gagal diberikan')
-            document.location.href = '" . BASE_URL . "/penilaian_test.php?id_tugas=" . $id_tugas . "'
+        alert('Nilai gagal diberikan')
+        document.location.href = '" . BASE_URL . "/penilaian_test.php?id_tugas=" . $id_tugas . "'
         </script>";
         exit;
     }
 }
+
+$title = 'Penilaian';
+require_once __DIR__ . '/template/dashboard_navbar.php';
 
 ?>
 

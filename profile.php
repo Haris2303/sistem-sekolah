@@ -1,5 +1,5 @@
 <?php
-$title = 'Tambah Guru';
+$title = 'Profile';
 
 require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';

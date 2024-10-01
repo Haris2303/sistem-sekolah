@@ -1,15 +1,22 @@
 <?php
 
-$title = 'Guru';
-
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/siswa.php';
 require_once __DIR__ . '/service/ruang.php';
 require_once __DIR__ . '/service/materi.php';
 require_once __DIR__ . '/service/tugas.php';
 
-$id_ruang = $_GET['id_ruang'];
+$id_ruang = 0;
+if (isset($_GET['id_ruang'])) {
+    $id_ruang = $_GET['id_ruang'];
+}
+
+if (cekAksesRuangByIdPengguna($_SESSION['id_pengguna'], $id_ruang)) {
+    http_response_code(404);
+    include(__DIR__ . '/404.php');
+    exit;
+}
+
 $ruang = selectRuangById($id_ruang);
 $siswa = selectSiswaByKelas($ruang['id_kelas']);
 
@@ -30,15 +37,15 @@ if (isset($_POST['hapus_ruang'])) {
     if (hapusRuangById($_POST['id_ruang'])) {
         echo "
         <script>
-            alert('Ruang berhasil dihapus')
-            document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php'
+        alert('Ruang berhasil dihapus')
+        document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('Ruang gagal dihapus')
-            document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php'
+        alert('Ruang gagal dihapus')
+        document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php'
         </script>";
         exit;
     }
@@ -49,15 +56,15 @@ if (isset($_POST['hapus_tugas'])) {
     if (hapusTugas($_POST['id_tugas'])) {
         echo "
         <script>
-            alert('Tugas berhasil dihapus')
-            document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "'
+        alert('Tugas berhasil dihapus')
+        document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('Tugas gagal dihapus')
-            document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php?id_ruang=" . $id_ruang . "'
+        alert('Tugas gagal dihapus')
+        document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php?id_ruang=" . $id_ruang . "'
         </script>";
         exit;
     }
@@ -68,19 +75,22 @@ if (isset($_POST['hapus_materi'])) {
     if (hapusMateri($_POST['id_materi'])) {
         echo "
         <script>
-            alert('Materi berhasil dihapus')
-            document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "'
+        alert('Materi berhasil dihapus')
+        document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('Materi gagal dihapus')
-            document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php?id_ruang=" . $id_ruang . "'
+        alert('Materi gagal dihapus')
+        document.location.href = '" . BASE_URL . "/ruang_pembelajaran.php?id_ruang=" . $id_ruang . "'
         </script>";
         exit;
     }
 }
+
+$title = 'Detail Ruang';
+require_once __DIR__ . '/template/dashboard_navbar.php';
 
 ?>
 
@@ -96,7 +106,7 @@ if (isset($_POST['hapus_materi'])) {
                 </form>
             <?php endif ?>
         </div>
-        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, totam ducimus! Quidem harum quos recusandae sed nihil consequatur impedit esse quaerat. Quasi ad possimus cupiditate suscipit nulla. Molestias, earum impedit?</span>
+        <span>Selamat datang di ruang pembelajaran <?= $ruang['nama'] ?>. Di sini, siswa dapat mengakses tugas, dan materi penting terkait pembelajaran teknologi. Pastikan untuk selalu memeriksa deadline tugas dan mendownload materi terbaru yang tersedia.</span>
     </div>
 
     <div class="row mt-3">
@@ -219,7 +229,9 @@ if (isset($_POST['hapus_materi'])) {
                     <?php foreach ($siswa as $row): ?>
                         <li class="list-group-item d-flex align-items-center border-0">
                             <img src="img/siswa/<?= $row['photo_siswa'] ?>" class="rounded-circle bg-light" style="width: 40px; height: 40px;"></img>
-                            <span class="ms-3"><?= $row['nama_pengguna'] ?></span>
+                            <span class="ms-3"><?= $row['nama_pengguna'] ?> <?= (isset($id_siswa))
+                                                                                ? ($row['id_siswa'] === $id_siswa) ? '(Anda)' : ''
+                                                                                : '' ?></span>
                         </li>
                     <?php endforeach ?>
                 </ul>

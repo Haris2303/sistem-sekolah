@@ -1,6 +1,6 @@
 <?php
-session_start();
 
+require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/guru.php';
 require_once __DIR__ . '/siswa.php';
 

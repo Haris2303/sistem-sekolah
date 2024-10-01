@@ -1,11 +1,17 @@
 <?php
-$title = 'Pemberitahuan';
 
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/pemberitahuan.php';
+require_once __DIR__ . '/service/siswa.php';
 
-ob_start();
+// jika yang akses adalah guru tampilkan 404
+if ($_SESSION['role'] === 'guru') {
+    include(__DIR__ . '/404.php');
+    exit;
+}
+
+// dapatkan id siswa
+$id_siswa = selectSiswaById($_SESSION['id_pengguna'])['id_siswa'];
 
 // ketika hapus ditekan
 if (isset($_POST['hapus'])) {
@@ -26,18 +32,22 @@ if (isset($_POST['hapus'])) {
     }
 }
 
+// jika tombol lihat ditekan
 if (isset($_POST['edit_dibaca'])) {
     editDibacaById($_POST['id_pemberitahuan']);
     echo "<script>window.location.href = 'lihat_pesan.php?id_pemberitahuan=" . $_POST['id_pemberitahuan'] . "';</script>";
     exit;
 }
 
+$title = 'Pemberitahuan';
+require_once __DIR__ . '/template/dashboard_navbar.php';
+
 ?>
 
 <main id="main" class="main">
     <div class="pagetitle mb-3">
         <h1>Pemberitahuan</h1>
-        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, totam ducimus! Quidem harum quos recusandae sed nihil consequatur impedit esse quaerat. Quasi ad possimus cupiditate suscipit nulla. Molestias, earum impedit?</span>
+        <span>Sistem kami mengirimkan pemberitahuan penting terkait pembayaran, keaktifan, dll. Pastikan Anda memeriksa setiap pesan yang masuk untuk informasi lebih lanjut. Jika ada pertanyaan, hubungi bagian administrasi sekolah.</span>
     </div>
 
     <?php if ($_SESSION['role'] === 'admin'): ?>
@@ -59,7 +69,7 @@ if (isset($_POST['edit_dibaca'])) {
             </tr>
         </thead>
         <tbody>
-            <?php foreach (listPemberitahuan() as $row): ?>
+            <?php foreach (selectPemberitahuanByIdSiswa($id_siswa, 'true') as $row): ?>
                 <tr class="align-middle">
                     <td><?= $row['nama'] ?></td>
                     <td><?= $row['subjek'] ?></td>

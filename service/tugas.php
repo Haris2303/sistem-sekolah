@@ -3,6 +3,8 @@
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/utilities.php';
 require_once __DIR__ . '/pengumpulan.php';
+require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/ruang.php';
 
 function selectTugasByIdRuang($id_ruang)
 {
@@ -16,6 +18,27 @@ function selectTugasById($id_tugas)
     global $conn;
     $sql = "SELECT * FROM tugas WHERE id_tugas = $id_tugas";
     return $conn->query($sql)->fetch_assoc();
+}
+
+function cekTugas($id_tugas)
+{
+    $id_tugas = (int) $id_tugas;
+    if (!is_int($id_tugas) || !selectTugasById($id_tugas)) {
+        http_response_code(404);
+        include(__DIR__ . '/../404.php');
+        exit;
+    }
+}
+
+function cekAksesTugasByIdPengguna($id_pengguna, $id_tugas)
+{
+    // check id tugas apakah ada atau tidak, tampilkan 404 jika tidak
+    cekTugas($id_tugas);
+
+    $guru = selectGuruById($id_pengguna);
+    $ruang = listRuangByIdGuru($guru['id_guru'])->fetch_assoc();
+
+    return is_null($ruang);
 }
 
 function tambahTugas($data)

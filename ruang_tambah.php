@@ -1,12 +1,17 @@
 <?php
-$title = 'Tambah Guru';
 
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/auth.php';
 require_once __DIR__ . '/service/kelas.php';
 require_once __DIR__ . '/service/guru.php';
 require_once __DIR__ . '/service/ruang.php';
+
+// jika yang akses adalah guru tampilkan 404
+if ($_SESSION['role'] === 'siswa') {
+    http_response_code(404);
+    include(__DIR__ . '/404.php');
+    exit;
+}
 
 // ketika tombol buat ditekan
 if (isset($_POST['tambah_ruang'])) {
@@ -26,6 +31,9 @@ if (isset($_POST['tambah_ruang'])) {
 }
 
 $guru = selectGuruById($_SESSION['id_pengguna']);
+
+$title = 'Tambah Ruang Pembelajaran';
+require_once __DIR__ . '/template/dashboard_navbar.php';
 
 ?>
 

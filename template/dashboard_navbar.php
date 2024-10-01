@@ -6,8 +6,8 @@ require_once __DIR__ . '/../service/siswa.php';
 
 $jumlah_pemberitahuan = 0;
 if ($_SESSION['role'] === 'siswa') {
-    $siswa = selectSiswaById($_SESSION['id_pengguna']);
-    $jumlah_pemberitahuan = selectPemberitahuanByIdSiswa($siswa['id_siswa'])->num_rows;
+    $data_siswa = selectSiswaById($_SESSION['id_pengguna']);
+    $jumlah_pemberitahuan = selectPemberitahuanByIdSiswa($data_siswa['id_siswa'], 'false')->num_rows;
 }
 
 ?>
