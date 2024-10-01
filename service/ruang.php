@@ -6,7 +6,7 @@ require_once __DIR__ . '/materi.php';
 function listRuangByIdGuru($id_guru)
 {
     global $conn;
-    $sql = "SELECT 
+    $sql = "SELECT
             ruang_pembelajaran.id_ruang,
             ruang_pembelajaran.image,
             ruang_pembelajaran.nama AS nama_ruang,
@@ -27,6 +27,21 @@ function listRuangByIdGuru($id_guru)
             JOIN kelas ON ruang_pembelajaran.id_kelas = kelas.id_kelas
             JOIN guru ON ruang_pembelajaran.id_guru = guru.id_guru
             WHERE guru.id_guru = $id_guru";
+    return $conn->query($sql);
+}
+
+function listRuangByIdKelas($id_kelas)
+{
+    global $conn;
+    $sql = "SELECT 
+            ruang_pembelajaran.id_ruang,
+            ruang_pembelajaran.image,
+            ruang_pembelajaran.nama AS nama_ruang,
+            ruang_pembelajaran.id_kelas,
+            kelas.nama AS nama_kelas
+            FROM ruang_pembelajaran
+            JOIN kelas ON ruang_pembelajaran.id_kelas = kelas.id_kelas
+            WHERE kelas.id_kelas = $id_kelas";
     return $conn->query($sql);
 }
 

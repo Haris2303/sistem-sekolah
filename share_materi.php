@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 $title = 'Tambah Guru';
 
 require_once __DIR__ . '/template/dashboard_navbar.php';

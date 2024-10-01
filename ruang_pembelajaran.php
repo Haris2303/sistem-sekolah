@@ -5,6 +5,7 @@ require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/ruang.php';
 require_once __DIR__ . '/service/guru.php';
+require_once __DIR__ . '/service/siswa.php';
 
 // ketika hapus ditekan
 if (isset($_POST['hapus'])) {
@@ -25,7 +26,16 @@ if (isset($_POST['hapus'])) {
     }
 }
 
-$id_guru = selectGuruById($_SESSION['id_pengguna'])['id_guru'];
+if ($_SESSION['role'] === 'guru') {
+    $id_guru = selectGuruById($_SESSION['id_pengguna'])['id_guru'];
+    $listRuang = listRuangByIdGuru($id_guru);
+}
+
+if ($_SESSION['role'] === 'siswa') {
+    $id_kelas = selectSiswaById($_SESSION['id_pengguna'])['id_kelas'];
+    $listRuang = listRuangByIdKelas($id_kelas);
+}
+
 
 ?>
 
@@ -44,21 +54,27 @@ $id_guru = selectGuruById($_SESSION['id_pengguna'])['id_guru'];
     <?php endif ?>
 
     <div class="row mt-3">
-        <?php foreach (listRuangByIdGuru($id_guru) as $row): ?>
-            <div class="col-lg-3">
-                <a href="detail_ruang.php?id_ruang=<?= $row['id_ruang'] ?>">
-                    <div class="card">
-                        <img src="img/ruang_pembelajaran/<?= $row['image'] ?>" class="card-img-top" alt="Profile ruang">
-                        <div class="card-body pt-3">
-                            <p class="card-text mb-0"><?= $row['nama_ruang'] ?></p>
-                            <span class="text-secondary">
-                                <small><?= $row['nama_kelas'] ?></small>
-                            </span>
+        <?php if ($listRuang->num_rows !== 0) : ?>
+            <?php foreach ($listRuang as $row): ?>
+                <div class="col-lg-3">
+                    <a href="detail_ruang.php?id_ruang=<?= $row['id_ruang'] ?>">
+                        <div class="card">
+                            <img src="img/ruang_pembelajaran/<?= $row['image'] ?>" class="card-img-top" alt="Profile ruang">
+                            <div class="card-body pt-3">
+                                <p class="card-text mb-0"><?= $row['nama_ruang'] ?></p>
+                                <span class="text-secondary">
+                                    <small><?= $row['nama_kelas'] ?></small>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+            <?php endforeach ?>
+        <?php else: ?>
+            <div class="text-center mt-5 fs-5 text-secondary">
+                <span>Data ruang masih kosong silahkan buat ruang</span>
             </div>
-        <?php endforeach ?>
+        <?php endif ?>
     </div>
 
 </main>

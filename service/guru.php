@@ -40,7 +40,22 @@ function listGuru()
 function selectGuruById($id_pengguna)
 {
     global $conn;
-    $sql = "SELECT * FROM guru JOIN pengguna ON guru.id_pengguna = pengguna.id_pengguna WHERE guru.id_pengguna = $id_pengguna";
+    $sql = "SELECT pengguna.id_pengguna,
+                pengguna.nama,
+                pengguna.email,
+                pengguna.username,
+                pengguna.role,
+                guru.id_guru,
+                guru.photo,
+                guru.nip,
+                guru.nuptk,
+                guru.nrg,
+                guru.jenis_kelamin,
+                guru.bidang_studi,
+                guru.bidang_sertifikasi,
+                guru.jabatan,
+                guru.tugas_tambahan 
+            FROM guru JOIN pengguna ON guru.id_pengguna = pengguna.id_pengguna WHERE guru.id_pengguna = $id_pengguna";
     $result = $conn->query($sql);
     return $result->fetch_assoc();
 }

@@ -1,4 +1,5 @@
 <?php
+
 $title = 'Guru';
 
 require_once __DIR__ . '/template/dashboard_navbar.php';
@@ -11,6 +12,18 @@ require_once __DIR__ . '/service/tugas.php';
 $id_ruang = $_GET['id_ruang'];
 $ruang = selectRuangById($id_ruang);
 $siswa = selectSiswaByKelas($ruang['id_kelas']);
+
+// membuat session id ruang
+$_SESSION['id_ruang'] = $id_ruang;
+
+if ($_SESSION['role'] === 'guru') {
+    $listTugas = selectTugasByIdRuang($id_ruang);
+}
+
+if ($_SESSION['role'] === 'siswa') {
+    $id_siswa = selectSiswaById($_SESSION['id_pengguna'])['id_siswa'];
+    $listTugas = selectPengumpulanByIdSiswa($id_siswa);
+}
 
 // ketika hapus ditekan
 if (isset($_POST['hapus_ruang'])) {
@@ -75,10 +88,13 @@ if (isset($_POST['hapus_materi'])) {
     <div class="pagetitle mb-3">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Ruang Pembelajaran | <?= $ruang['nama'] ?></h1>
-            <form action="" method="POST">
-                <input type="hidden" name="id_ruang" value="<?= $id_ruang ?>">
-                <button type="submit" name="hapus_ruang" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus ruang ini?')">Hapus Ruang</button>
-            </form>
+
+            <?php if ($_SESSION['role'] === 'guru'): ?>
+                <form action="" method="POST">
+                    <input type="hidden" name="id_ruang" value="<?= $id_ruang ?>">
+                    <button type="submit" name="hapus_ruang" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus ruang ini?')">Hapus Ruang</button>
+                </form>
+            <?php endif ?>
         </div>
         <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, totam ducimus! Quidem harum quos recusandae sed nihil consequatur impedit esse quaerat. Quasi ad possimus cupiditate suscipit nulla. Molestias, earum impedit?</span>
     </div>
@@ -86,35 +102,65 @@ if (isset($_POST['hapus_materi'])) {
     <div class="row mt-3">
         <div class="col-lg-8">
             <div class="card p-3">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5>Test Siswa</h5>
-                    <div class="text-end">
-                        <a href="buat_test.php?id_ruang=<?= $id_ruang ?>" class="btn btn-primary">Buat Test</a>
+
+                <?php if ($_SESSION['role'] === 'guru'): ?>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5>Test Siswa</h5>
+                        <div class="text-end">
+                            <a href="buat_test.php?id_ruang=<?= $id_ruang ?>" class="btn btn-primary">Buat Test</a>
+                        </div>
                     </div>
-                </div>
+                <?php endif ?>
 
                 <table class="table datatable">
                     <thead>
                         <tr>
                             <th>Judul</th>
                             <th>Deadline</th>
-                            <th>Siswa Kerjakan</th>
+
+                            <?php if ($_SESSION['role'] === 'guru'): ?>
+                                <th>Siswa Kerjakan</th>
+                            <?php endif ?>
+
+                            <?php if ($_SESSION['role'] === 'siswa'): ?>
+                                <th>Nilai</th>
+                                <th>Status</th>
+                            <?php endif ?>
                             <th class="text-center">Aksi</th>
                             <th class="d-none">Column Tambahan</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach (selectTugasByIdRuang($id_ruang) as $row): ?>
+                        <?php foreach ($listTugas as $row): ?>
                             <tr class="align-middle">
                                 <td><?= $row['judul'] ?></td>
                                 <td><?= $row['deadline'] ?></td>
-                                <td><?= $row['jumlah_diserahkan'] ?></td>
+
+                                <?php if ($_SESSION['role'] === 'guru'): ?>
+                                    <td><?= $row['jumlah_diserahkan'] ?></td>
+                                <?php endif ?>
+
+                                <?php if ($_SESSION['role'] === 'siswa'): ?>
+                                    <td class="text-center"><?= $row['nilai'] ?></td>
+                                    <td><?= $row['status'] ?></td>
+                                <?php endif ?>
+
                                 <td>
-                                    <a href="penilaian_test.php?id_tugas=<?= $row['id_tugas'] ?>" class="btn btn-primary badge">Penilaian</a>
-                                    <form action="" method="post" class="d-inline">
-                                        <input type="hidden" name="id_tugas" value="<?= $row['id_tugas'] ?>">
-                                        <button type="submit" class="btn btn-danger badge" name="hapus_tugas" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
-                                    </form>
+                                    <?php if ($_SESSION['role'] === 'guru'): ?>
+                                        <a href="penilaian_test.php?id_tugas=<?= $row['id_tugas'] ?>" class="btn btn-primary badge">Penilaian</a>
+                                    <?php elseif ($_SESSION['role'] === 'siswa'): ?>
+                                        <?php if ($row['status'] === 'belum diserahkan'): ?>
+                                            <a href="kumpul_tugas.php?id_pengumpulan=<?= $row['id_pengumpulan'] ?>" class="btn btn-primary badge">Kumpul</a>
+                                        <?php elseif ($row['status'] === 'diserahkan'): ?>
+                                            <a href="lihat_file.php?file=<?= $row['file_pengumpulan'] ?>&folder=pengumpulan" class="btn btn-primary badge">Lihat Hasil</a>
+                                        <?php endif ?>
+                                    <?php endif ?>
+                                    <?php if ($_SESSION['role'] === 'guru'): ?>
+                                        <form action="" method="post" class="d-inline">
+                                            <input type="hidden" name="id_tugas" value="<?= $row['id_tugas'] ?>">
+                                            <button type="submit" class="btn btn-danger badge" name="hapus_tugas" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
+                                        </form>
+                                    <?php endif ?>
                                 </td>
                                 <th class="d-none">Column Tambahan</th>
                             </tr>
@@ -126,9 +172,11 @@ if (isset($_POST['hapus_materi'])) {
             <div class="card p-3">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5>Materi</h5>
-                    <div class="text-end">
-                        <a href="share_materi.php?id_ruang=<?= $id_ruang ?>" class="btn btn-primary">Share Materi</a>
-                    </div>
+                    <?php if ($_SESSION['role'] === 'guru'): ?>
+                        <div class="text-end">
+                            <a href="share_materi.php?id_ruang=<?= $id_ruang ?>" class="btn btn-primary">Share Materi</a>
+                        </div>
+                    <?php endif ?>
                 </div>
                 <table class="table datatable">
                     <thead>
@@ -147,10 +195,12 @@ if (isset($_POST['hapus_materi'])) {
                                 <td><?= $row['tanggal'] ?></td>
                                 <td>
                                     <a href="lihat_file.php?file=<?= $row['file'] ?>&folder=materi" class="btn btn-primary badge">Lihat</a>
-                                    <form action="" method="post" class="d-inline">
-                                        <input type="hidden" name="id_materi" value="<?= $row['id_materi'] ?>">
-                                        <button type="submit" class="btn btn-danger badge" name="hapus_materi" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
-                                    </form>
+                                    <?php if ($_SESSION['role'] === 'guru'): ?>
+                                        <form action="" method="post" class="d-inline">
+                                            <input type="hidden" name="id_materi" value="<?= $row['id_materi'] ?>">
+                                            <button type="submit" class="btn btn-danger badge" name="hapus_materi" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
+                                        </form>
+                                    <?php endif ?>
                                 </td>
                                 <th class="d-none">Column Tambahan</th>
                                 <th class="d-none">Column Tambahan</th>

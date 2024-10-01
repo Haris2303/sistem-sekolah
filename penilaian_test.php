@@ -9,20 +9,20 @@ require_once __DIR__ . '/service/pengumpulan.php';
 $id_tugas = $_GET['id_tugas'];
 $tugas = selectTugasById($id_tugas);
 
-// ketika hapus ditekan
-if (isset($_POST['hapus'])) {
-    if (hapusPemberitahuan($_POST['id_pemberitahuan'])) {
+// ketika kirim ditekan
+if (isset($_POST['kirim_nilai'])) {
+    if (menilaiPengumpulanById($_POST)) {
         echo "
         <script>
-            alert('Pesan berhasil dihapus')
-            document.location.href = '" . BASE_URL . "/pemberitahuan.php'
+            alert('Nilai telah diberikan')
+            document.location.href = '" . BASE_URL . "/penilaian_test.php?id_tugas=" . $id_tugas . "'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('Pesan gagal dihapus')
-            document.location.href = '" . BASE_URL . "/pemberitahuan.php'
+            alert('Nilai gagal diberikan')
+            document.location.href = '" . BASE_URL . "/penilaian_test.php?id_tugas=" . $id_tugas . "'
         </script>";
         exit;
     }
@@ -61,12 +61,23 @@ if (isset($_POST['hapus'])) {
                                 </div>
                             </div>
                             <div class="w-100">
-                                <?php if ($row['status'] === 'diserahkan'): ?>
-                                    <label for="nilai3" class="form-label">Beri Nilai</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="nilai3">
-                                        <button class="btn btn-success btn-sm">Kirim</button>
-                                    </div>
+
+                                <?php if ($row['status'] === 'diserahkan' && $row['nilai'] == 0): ?>
+                                    <form action="" method="post">
+                                        <input type="hidden" name="id_pengumpulan" value="<?= $row['id_pengumpulan'] ?>">
+                                        <label for="nilai" class="form-label">Beri Nilai</label>
+                                        <div class="input-group">
+                                            <div class="d-flex gap-3 align-items-center">
+                                                <input type="range" class="form-range" name="nilai" id="nilai" min="0" max="100" step="1" oninput="document.getElementById('rangeValue').innerText = this.value;">
+                                                <span id="rangeValue" class="input-group-text">50</span>
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <button type="submit" name="kirim_nilai" class="btn btn-success btn-sm w-100">Kirim</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                <?php elseif ($row['nilai'] > 0): ?>
+                                    <strong>Nilai</strong> : <span class="badge text-bg-success"><?= $row['nilai'] ?></span>
                                 <?php endif ?>
                             </div>
                         </div>
