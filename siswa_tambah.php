@@ -1,29 +1,36 @@
 <?php
-$title = 'Tambah Siswa';
-
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/auth.php';
 require_once __DIR__ . '/service/kelas.php';
+
+// jika yang akses adalah guru tampilkan 404
+if ($_SESSION['role'] === 'siswa') {
+    include(__DIR__ . '/404.php');
+    exit;
+}
 
 // ketika tombol tambah ditekan
 if (isset($_POST['tambah'])) {
     if (daftar($_POST, 'siswa', '/siswa_tambah.php')) {
         echo "
         <script>
-            alert('User berhasil ditambahkan')
-            document.location.href = '" . BASE_URL . "/siswa.php'
+        alert('User berhasil ditambahkan')
+        document.location.href = '" . BASE_URL . "/siswa.php'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('User gagal ditambahkan')
-            document.location.href = '" . BASE_URL . "/siswa.php'
+        alert('User gagal ditambahkan')
+        document.location.href = '" . BASE_URL . "/siswa.php'
         </script>";
         exit;
     }
 }
+
+$title = 'Tambah Siswa';
+require_once __DIR__ . '/template/dashboard_navbar.php';
+
 ?>
 
 <main id="main" class="main">

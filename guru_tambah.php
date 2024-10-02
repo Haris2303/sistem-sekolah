@@ -1,28 +1,36 @@
 <?php
-$title = 'Tambah Guru';
 
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/auth.php';
+
+// jika yang akses adalah guru tampilkan 404
+if ($_SESSION['role'] === 'siswa') {
+    include(__DIR__ . '/404.php');
+    exit;
+}
 
 // ketika daftar guru
 if (isset($_POST['tambah_guru'])) {
     if (daftar($_POST, 'guru', '/guru_tambah.php')) {
         echo "
         <script>
-            alert('User berhasil registrasi')
-            document.location.href = '" . BASE_URL . "/guru.php'
+        alert('User berhasil registrasi')
+        document.location.href = '" . BASE_URL . "/guru.php'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('User gagal registrasi')
-            document.location.href = '" . BASE_URL . "/guru.php'
+        alert('User gagal registrasi')
+        document.location.href = '" . BASE_URL . "/guru.php'
         </script>";
         exit;
     }
 }
+
+$title = 'Tambah Guru';
+require_once __DIR__ . '/template/dashboard_navbar.php';
+
 ?>
 
 <main id="main" class="main">

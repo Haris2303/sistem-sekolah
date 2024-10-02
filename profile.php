@@ -1,7 +1,4 @@
 <?php
-$title = 'Profile';
-
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/auth.php';
 require_once __DIR__ . '/service/guru.php';
@@ -26,19 +23,23 @@ if (isset($_POST['ubah_profile'])) {
     if (editProfile($id_pengguna, $_POST)) {
         echo "
         <script>
-            alert('Profil kamu telah disimpan')
-            document.location.href = '" . BASE_URL . "/profile.php'
+        alert('Profil kamu telah disimpan')
+        document.location.href = '" . BASE_URL . "/profile.php'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('Profil kamu gagal disimpan')
-            document.location.href = '" . BASE_URL . "/profile.php'
+        alert('Profil kamu gagal disimpan')
+        document.location.href = '" . BASE_URL . "/profile.php'
         </script>";
         exit;
     }
 }
+
+$title = 'Profile';
+require_once __DIR__ . '/template/dashboard_navbar.php';
+
 ?>
 
 <main id="main" class="main">

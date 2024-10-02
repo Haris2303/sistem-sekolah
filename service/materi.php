@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/utilities.php';
 
 function selectMateriByIdRuang($id_ruang)

@@ -14,7 +14,7 @@ if (isset($_GET['id_pemberitahuan'])) {
     $id_pemberitahuan = $_GET['id_pemberitahuan'];
 }
 
-if (cekAksesPemberitahuanByIdPengguna($_SESSION['id_pengguna'], $id_pemberitahuan)) {
+if ($_SESSION['role'] !== 'admin' && cekAksesPemberitahuanByIdPengguna($_SESSION['id_pengguna'], $id_pemberitahuan)) {
     http_response_code(404);
     include(__DIR__ . '/404.php');
     exit;

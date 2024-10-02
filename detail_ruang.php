@@ -133,6 +133,7 @@ require_once __DIR__ . '/template/dashboard_navbar.php';
                             <?php endif ?>
 
                             <?php if ($_SESSION['role'] === 'siswa'): ?>
+                                <th>Tgl Kumpul</th>
                                 <th>Nilai</th>
                                 <th>Status</th>
                             <?php endif ?>
@@ -151,6 +152,7 @@ require_once __DIR__ . '/template/dashboard_navbar.php';
                                 <?php endif ?>
 
                                 <?php if ($_SESSION['role'] === 'siswa'): ?>
+                                    <td><?= $row['tanggal_kumpul'] ?></td>
                                     <td class="text-center"><?= $row['nilai'] ?></td>
                                     <td><?= $row['status'] ?></td>
                                 <?php endif ?>

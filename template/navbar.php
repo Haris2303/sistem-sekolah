@@ -12,14 +12,16 @@ require_once __DIR__ . '/../config/const.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= APP_NAME ?></title>
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-transparent py-4 fixed-top" style="backdrop-filter: blur(20px);">
+    <nav class="navbar navbar-expand-lg bg-light py-4 fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#"><?= APP_NAME ?></a>
+            <a class="navbar-brand fw-bold text-primary" href="#"><?= APP_NAME ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

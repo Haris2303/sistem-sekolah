@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/utilities.php';
 require_once __DIR__ . '/tugas.php';
 
@@ -56,6 +55,23 @@ function serahkanPengumpulan($data)
     global $conn;
 
     $id_pengumpulan = $data['id_pengumpulan'];
+
+    // dapatkan deadline tugas
+    $id_tugas = selectPengumpulanById($id_pengumpulan)['id_tugas'];
+    $tugas = selectTugasById($id_tugas);
+    $deadline = $tugas['deadline'];
+
+    // dapatkan tanggal hari ini
+    $now = date('Y-m-d H:i:s');;
+
+    // cek apakah belum deadline
+    if ($now > $deadline) {
+        echo "<script>
+                alert('Anda tidak dapat mengumpulkan tugas lewat dari deadline!')
+                document.location.href = 'kumpul_tugas.php?id_pengumpulan=" . $id_pengumpulan . "'
+            </script>";
+        exit;
+    }
 
     $file = uploadFilePDF('pengumpulan');
     if (!$file) {

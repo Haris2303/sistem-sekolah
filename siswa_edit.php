@@ -1,11 +1,14 @@
 <?php
-$title = 'Edit Data Siswa';
-
-require_once 'template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/siswa.php';
 require_once __DIR__ . '/service/kelas.php';
 require_once __DIR__ . '/config/utilities.php';
+
+// jika yang akses adalah guru tampilkan 404
+if ($_SESSION['role'] === 'siswa') {
+    include(__DIR__ . '/404.php');
+    exit;
+}
 
 // ambil id get method
 $id_pengguna = $_GET['id_pengguna'];
@@ -16,19 +19,23 @@ if (isset($_POST['edit_siswa'])) {
     if (editSiswaById($id_pengguna, $_POST)) {
         echo "
         <script>
-            alert('User berhasil diubah')
-            document.location.href = '" . BASE_URL . "/siswa_edit.php?id_pengguna=" . $id_pengguna . "'
+        alert('User berhasil diubah')
+        document.location.href = '" . BASE_URL . "/siswa_edit.php?id_pengguna=" . $id_pengguna . "'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('User gagal diubah')
-            document.location.href = '" . BASE_URL . "/siswa_edit.php?id_pengguna=" . $id_pengguna . "'
+        alert('User gagal diubah')
+        document.location.href = '" . BASE_URL . "/siswa_edit.php?id_pengguna=" . $id_pengguna . "'
         </script>";
         exit;
     }
 }
+
+$title = 'Edit Data Siswa';
+require_once 'template/dashboard_navbar.php';
+
 ?>
 
 <main id="main" class="main">

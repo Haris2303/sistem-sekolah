@@ -35,8 +35,6 @@ if ($_SESSION['role'] === 'siswa') {
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="vendor/quill/quill.bubble.css" rel="stylesheet">
     <link href="vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="vendor/simple-datatables/style.css" rel="stylesheet">
 
@@ -174,7 +172,7 @@ if ($_SESSION['role'] === 'siswa') {
 
             <!-- Logout Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
+                <a class="nav-link collapsed" href="logout.php">
                     <i class="bi bi-box-arrow-left"></i>
                     <span>Logout</span>
                 </a>

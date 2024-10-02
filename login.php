@@ -3,6 +3,12 @@
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/auth.php';
 
+// cek jika ada is_login
+if (isset($_SESSION['is_login'])) {
+    header('location: dashboard.php');
+    exit;
+}
+
 // ketika login
 if (isset($_POST['login'])) {
     login($_POST);

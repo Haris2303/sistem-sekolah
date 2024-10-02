@@ -4,14 +4,25 @@ require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/pemberitahuan.php';
 require_once __DIR__ . '/service/siswa.php';
 
+$role = $_SESSION['role'];
+
 // jika yang akses adalah guru tampilkan 404
-if ($_SESSION['role'] === 'guru') {
+if ($role === 'guru') {
     include(__DIR__ . '/404.php');
     exit;
 }
 
-// dapatkan id siswa
-$id_siswa = selectSiswaById($_SESSION['id_pengguna'])['id_siswa'];
+// dapatkan id siswa jika pengguna adalah siswa
+$id_siswa = ($role === 'siswa') ? selectSiswaById($_SESSION['id_pengguna'])['id_siswa'] : null;
+
+// jika role siswa
+if ($role === 'siswa') {
+    $pemberitahuan = selectPemberitahuanByIdSiswa($id_siswa, 'true');
+}
+
+if ($role === 'admin') {
+    $pemberitahuan = listPemberitahuan();
+}
 
 // ketika hapus ditekan
 if (isset($_POST['hapus'])) {
@@ -69,7 +80,7 @@ require_once __DIR__ . '/template/dashboard_navbar.php';
             </tr>
         </thead>
         <tbody>
-            <?php foreach (selectPemberitahuanByIdSiswa($id_siswa, 'true') as $row): ?>
+            <?php foreach ($pemberitahuan as $row): ?>
                 <tr class="align-middle">
                     <td><?= $row['nama'] ?></td>
                     <td><?= $row['subjek'] ?></td>

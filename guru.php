@@ -1,9 +1,13 @@
 <?php
-$title = 'Guru';
 
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/guru.php';
+
+// jika yang akses adalah guru tampilkan 404
+if ($_SESSION['role'] === 'siswa') {
+    include(__DIR__ . '/404.php');
+    exit;
+}
 
 // ketika hapus ditekan
 if (isset($_POST['hapus'])) {
@@ -23,6 +27,9 @@ if (isset($_POST['hapus'])) {
         exit;
     }
 }
+
+$title = 'Guru';
+require_once __DIR__ . '/template/dashboard_navbar.php';
 
 ?>
 

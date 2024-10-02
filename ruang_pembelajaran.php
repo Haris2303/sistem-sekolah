@@ -1,7 +1,4 @@
 <?php
-$title = 'Ruang Pembelajaran';
-
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/ruang.php';
 require_once __DIR__ . '/service/guru.php';
@@ -12,15 +9,15 @@ if (isset($_POST['hapus'])) {
     if (hapusPemberitahuan($_POST['id_pemberitahuan'])) {
         echo "
         <script>
-            alert('Pesan berhasil dihapus')
-            document.location.href = '" . BASE_URL . "/pemberitahuan.php'
+        alert('Pesan berhasil dihapus')
+        document.location.href = '" . BASE_URL . "/pemberitahuan.php'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('Pesan gagal dihapus')
-            document.location.href = '" . BASE_URL . "/pemberitahuan.php'
+        alert('Pesan gagal dihapus')
+        document.location.href = '" . BASE_URL . "/pemberitahuan.php'
         </script>";
         exit;
     }
@@ -36,6 +33,8 @@ if ($_SESSION['role'] === 'siswa') {
     $listRuang = listRuangByIdKelas($id_kelas);
 }
 
+$title = 'Ruang Pembelajaran';
+require_once __DIR__ . '/template/dashboard_navbar.php';
 
 ?>
 

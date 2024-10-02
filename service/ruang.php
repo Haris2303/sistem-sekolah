@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/materi.php';
 require_once __DIR__ . '/guru.php';
 
@@ -78,7 +77,7 @@ function cekAksesRuangByIdPengguna($id_pengguna, $id_ruang)
     } else {
         $siswa = selectSiswaById($id_pengguna);
 
-        return $siswa['id_siswa'] !== $ruang['id_kelas'];
+        return $siswa['id_kelas'] !== $ruang['id_kelas'];
     }
 }
 

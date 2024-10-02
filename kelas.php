@@ -1,7 +1,5 @@
 <?php
-$title = 'Kelas';
 
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/kelas.php';
 
@@ -10,15 +8,15 @@ if (isset($_POST['tambah'])) {
     if (tambahKelas($_POST)) {
         echo "
         <script>
-            alert('Kelas berhasil ditambahkan')
-            document.location.href = '" . BASE_URL . "/kelas.php'
+        alert('Kelas berhasil ditambahkan')
+        document.location.href = '" . BASE_URL . "/kelas.php'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('Kelas gagal ditambahkan')
-            document.location.href = '" . BASE_URL . "/kelas.php'
+        alert('Kelas gagal ditambahkan')
+        document.location.href = '" . BASE_URL . "/kelas.php'
         </script>";
         exit;
     }
@@ -29,19 +27,22 @@ if (isset($_POST['hapus'])) {
     if (hapusKelasById($_POST['id_kelas'])) {
         echo "
         <script>
-            alert('Kelas berhasil dihapus')
-            document.location.href = '" . BASE_URL . "/kelas.php'
+        alert('Kelas berhasil dihapus')
+        document.location.href = '" . BASE_URL . "/kelas.php'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('Kelas gagal dihapus')
-            document.location.href = '" . BASE_URL . "/kelas.php'
+        alert('Kelas gagal dihapus')
+        document.location.href = '" . BASE_URL . "/kelas.php'
         </script>";
         exit;
     }
 }
+
+$title = 'Kelas';
+require_once __DIR__ . '/template/dashboard_navbar.php';
 
 ?>
 

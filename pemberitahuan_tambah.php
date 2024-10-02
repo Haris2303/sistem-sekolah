@@ -1,30 +1,37 @@
 <?php
-$title = 'Tambah Guru';
-
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/auth.php';
 require_once __DIR__ . '/service/siswa.php';
 require_once __DIR__ . '/service/pemberitahuan.php';
+
+// jika yang akses adalah guru tampilkan 404
+if ($_SESSION['role'] !== 'admin') {
+    include(__DIR__ . '/404.php');
+    exit;
+}
 
 // ketika tombol kirim ditekan
 if (isset($_POST['kirim'])) {
     if (tambahPemberitahuan($_POST)) {
         echo "
         <script>
-            alert('Pemberitahuan berhasil dikirim')
+        alert('Pemberitahuan berhasil dikirim')
             document.location.href = '" . BASE_URL . "/pemberitahuan.php'
-        </script>";
+            </script>";
         exit;
     } else {
         echo "
-        <script>
+            <script>
             alert('Pemberitahuan gagal dikirim')
             document.location.href = '" . BASE_URL . "/pemberitahuan.php'
-        </script>";
+            </script>";
         exit;
     }
 }
+
+$title = 'Buat Pemberitahuan';
+require_once __DIR__ . '/template/dashboard_navbar.php';
+
 ?>
 
 <main id="main" class="main">

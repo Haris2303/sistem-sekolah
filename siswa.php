@@ -1,28 +1,35 @@
 <?php
-$title = 'Siswa';
 
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/siswa.php';
+
+// jika yang akses adalah guru tampilkan 404
+if ($_SESSION['role'] === 'siswa') {
+    include(__DIR__ . '/404.php');
+    exit;
+}
 
 // ketika hapus ditekan
 if (isset($_POST['hapus'])) {
     if (hapusSiswaById($_POST['id_pengguna'])) {
         echo "
         <script>
-            alert('Siswa berhasil dihapus')
-            document.location.href = '" . BASE_URL . "/siswa.php'
+        alert('Siswa berhasil dihapus')
+        document.location.href = '" . BASE_URL . "/siswa.php'
         </script>";
         exit;
     } else {
         echo "
         <script>
-            alert('Siswa gagal dihapus')
-            document.location.href = '" . BASE_URL . "/siswa.php'
+        alert('Siswa gagal dihapus')
+        document.location.href = '" . BASE_URL . "/siswa.php'
         </script>";
         exit;
     }
 }
+
+$title = 'Siswa';
+require_once __DIR__ . '/template/dashboard_navbar.php';
 
 ?>
 
