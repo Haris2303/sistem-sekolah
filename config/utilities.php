@@ -1,7 +1,7 @@
 <?php
 
 // Include library FPDF
-require('vendor/fpdf186/fpdf.php');
+require_once  __DIR__ . '/../vendor/fpdf186/fpdf.php';
 
 $bidang = ['Ekonomi', 'Bahasa Indonesia'];
 $jabatan = ['Guru Muda / Pembina', 'Guru Muda / Penata Tingkat 1', 'Guru Ahli Muda / Penata Tingkat 1', 'Guru Muda / Penata Tingkat 1'];

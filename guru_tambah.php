@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/config/utilities.php';
 require_once __DIR__ . '/service/auth.php';
 
 // jika yang akses adalah guru tampilkan 404
@@ -36,7 +37,6 @@ require_once __DIR__ . '/template/dashboard_navbar.php';
 <main id="main" class="main">
     <div class="pagetitle mb-3">
         <h1>Tambah Data Guru</h1>
-        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, totam ducimus! Quidem harum quos recusandae sed nihil consequatur impedit esse quaerat. Quasi ad possimus cupiditate suscipit nulla. Molestias, earum impedit?</span>
     </div>
 
     <div class="col-8">

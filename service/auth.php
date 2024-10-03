@@ -3,25 +3,6 @@
 require_once __DIR__ . '/guru.php';
 require_once __DIR__ . '/siswa.php';
 
-// ketika daftar 
-if (isset($_POST['daftar'])) {
-    if (daftar($_POST, 'admin', '/daftar.php')) {
-        echo "
-        <script>
-            alert('User berhasil registrasi')
-            document.location.href = '" . BASE_URL . "/daftar.php'
-        </script>";
-        exit;
-    } else {
-        echo "
-        <script>
-            alert('User gagal registrasi')
-            document.location.href = '" . BASE_URL . "/daftar.php'
-        </script>";
-        exit;
-    }
-}
-
 // Fugnsi daftar akun
 function daftar($data, $role, $redirect)
 {

@@ -1,3 +1,28 @@
+<?php
+
+require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/service/auth.php';
+
+// ketika daftar
+if (isset($_POST['daftar'])) {
+    if (daftar($_POST, 'admin', '/daftar.php')) {
+        echo "
+        <script>
+            alert('User berhasil registrasi')
+            document.location.href = '" . BASE_URL . "/daftar.php'
+        </script>";
+        exit;
+    } else {
+        echo "
+        <script>
+            alert('User gagal registrasi')
+            document.location.href = '" . BASE_URL . "/daftar.php'
+        </script>";
+        exit;
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +65,7 @@
                                     </h5>
                                 </div>
 
-                                <form action="service/auth.php" class="row g-3" method="post">
+                                <form action="" class="row g-3" method="post">
 
                                     <div class="col-12">
                                         <label for="yourname" class="form-label">name</label>
