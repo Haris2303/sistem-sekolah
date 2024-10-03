@@ -58,21 +58,21 @@ require_once __DIR__ . '/template/dashboard_navbar.php';
                         <div class="form-check">
                             <input type="radio" class="form-check-input" name="pilih_gambar" id="gambar1" value="image1.jpg" checked>
                             <label for="gambar1" class="form-check-label">
-                                <img src="img/slides/slide1.jpg" alt="Image 1" style="max-width:100px;">
+                                <img src="img/ruang_pembelajaran/image1.jpg" alt="Image 1" style="max-width:100px;">
                             </label>
                         </div>
                         <!-- Opsi 1 -->
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="pilih_gambar" id="gambar1" value="image1.jpg">
-                            <label for="gambar1" class="form-check-label">
-                                <img src="img/slides/slide1.jpg" alt="Image 1" style="max-width:100px;">
+                            <input type="radio" class="form-check-input" name="pilih_gambar" id="gambar2" value="image2.jpg">
+                            <label for="gambar2" class="form-check-label">
+                                <img src="img/ruang_pembelajaran/image2.jpg" alt="Image 1" style="max-width:100px;">
                             </label>
                         </div>
                         <!-- Opsi 1 -->
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="pilih_gambar" id="gambar1" value="image1.jpg">
-                            <label for="gambar1" class="form-check-label">
-                                <img src="img/slides/slide1.jpg" alt="Image 1" style="max-width:100px;">
+                            <input type="radio" class="form-check-input" name="pilih_gambar" id="gambar3" value="image3.jpg">
+                            <label for="gambar3" class="form-check-label">
+                                <img src="img/ruang_pembelajaran/image3.jpg" alt="Image 1" style="max-width:100px;">
                             </label>
                         </div>
 

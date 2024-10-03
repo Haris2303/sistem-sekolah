@@ -117,8 +117,9 @@ function hapusRuangById($id_ruang)
     try {
         $conn->autocommit(false);
 
-        // dapatkan semua data materi berdasarkan id_ruang
+        // dapatkan semua data materi dan ruang berdasarkan id_ruang
         $materi = selectMateriByIdRuang($id_ruang);
+        $ruang = selectRuangById($id_ruang);
 
         // hapus materi berdasarkan id ruang
         $sql = "DELETE FROM materi WHERE id_ruang = $id_ruang";
@@ -133,6 +134,9 @@ function hapusRuangById($id_ruang)
         foreach ($materi as $m) {
             unlink(__DIR__ . '/../file/materi/' . $m['file']);
         }
+
+        // hapus file gambar ruang jika bukan gambar pilihan
+        if (!str_contains($ruang['image'], 'image')) unlink(__DIR__ . '/../img/ruang_pembelajaran/' . $ruang['image']);
 
         $conn->commit();
     } catch (Exception $e) {
