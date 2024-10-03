@@ -4,7 +4,7 @@
 define('BASE_URL', 'http://localhost/sistem-sekolah');
 
 // nama aplikasi
-define('APP_NAME', 'SMA Papua SOQ');
+define('APP_NAME', 'SMA Papua Sorong');
 
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');

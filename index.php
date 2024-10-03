@@ -115,7 +115,7 @@
                             <label for="message" class="form-label">Pesan</label>
                             <textarea type="text" class="form-control" id="message" rows="5"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Kirim</button>
+                        <button type="submit" class="btn btn-dark">Kirim</button>
                     </form>
                 </div>
                 <div class="col-lg-6">
@@ -138,7 +138,7 @@
 
         var name = document.getElementById('name').value;
         var message = document.getElementById('message').value;
-        var phoneNumber = '625796081337'; // Ganti dengan nomor WhatsApp owner tanpa '+' dan spasi
+        var phoneNumber = '6281343398859'; // Ganti dengan nomor WhatsApp owner tanpa '+' dan spasi
 
         var url = 'https://wa.me/' + phoneNumber + '?text=' +
             encodeURIComponent('Halo, saya ' + name + '.\n\n' + message);

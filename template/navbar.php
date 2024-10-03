@@ -21,7 +21,8 @@ require_once __DIR__ . '/../config/const.php';
 
     <nav class="navbar navbar-expand-lg bg-light py-4 fixed-top">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="#"><?= APP_NAME ?></a>
+            <img src="img/logo/logo-sekolah.png" alt="Logo" width="30" class="d-inline-block align-text-top">
+            <a class="navbar-brand fw-bold text-primary ms-3" href="index.php"><?= APP_NAME ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

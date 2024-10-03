@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/config/utilities.php';
 require_once __DIR__ . '/service/guru.php';
 
 // jika yang akses adalah guru tampilkan 404
@@ -28,6 +29,13 @@ if (isset($_POST['hapus'])) {
     }
 }
 
+// jika convert to pdf di tekan
+if (isset($_POST['laporan'])) {
+    $data = listGuru();
+    laporan("Data Guru", $data, 'guru');
+    exit;
+}
+
 $title = 'Guru';
 require_once __DIR__ . '/template/dashboard_navbar.php';
 
@@ -36,12 +44,14 @@ require_once __DIR__ . '/template/dashboard_navbar.php';
 <main id="main" class="main">
     <div class="pagetitle mb-3">
         <h1>Guru</h1>
-        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, totam ducimus! Quidem harum quos recusandae sed nihil consequatur impedit esse quaerat. Quasi ad possimus cupiditate suscipit nulla. Molestias, earum impedit?</span>
+        <span>Memanagement sebuah data guru serta membuat akun dari guru</span>
     </div>
 
     <div class="row text-end">
         <div class="col">
-            <a href="#" class="btn btn-secondary">Generate</a>
+            <form action="" method="post" class="d-inline">
+                <button type="submit" class="btn btn-secondary" name="laporan">Convert to PDF</button>
+            </form>
             <a href="guru_tambah.php" class="btn btn-primary">Tambah Data</a>
         </div>
     </div>

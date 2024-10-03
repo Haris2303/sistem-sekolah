@@ -1,7 +1,5 @@
 <?php
-$title = 'Tambah Guru';
 
-require_once __DIR__ . '/template/dashboard_navbar.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/service/pengumpulan.php';
 
@@ -12,20 +10,23 @@ if (isset($_POST['serahkan'])) {
     if (serahkanPengumpulan($_POST)) {
         echo "
         <script>
-            alert('Tugas berhasil diserahkan');
-            document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "';
+        alert('Tugas berhasil diserahkan');
+        document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "';
         </script>";
     } else {
         echo "
         <script>
-            alert('Tugas gagal diserahkan');
-            document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "';
+        alert('Tugas gagal diserahkan');
+        document.location.href = '" . BASE_URL . "/detail_ruang.php?id_ruang=" . $id_ruang . "';
         </script>";
     }
 }
 
 $id_pengumpulan = $_GET['id_pengumpulan'];
 $pengumpulan = selectPengumpulanById($id_pengumpulan);
+
+$title = 'Tambah Guru';
+require_once __DIR__ . '/template/dashboard_navbar.php';
 
 ?>
 

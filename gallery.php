@@ -4,7 +4,7 @@
     <!-- title -->
     <div class="text-center">
         <h1>Gallery</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, incidunt?</p>
+        <p>Potret Momen Terbaik Kami</p>
     </div>
 
     <!-- content -->

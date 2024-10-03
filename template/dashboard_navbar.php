@@ -7,7 +7,7 @@ require_once __DIR__ . '/../service/siswa.php';
 $jumlah_pemberitahuan = 0;
 if ($_SESSION['role'] === 'siswa') {
     $data_siswa = selectSiswaById($_SESSION['id_pengguna']);
-    $jumlah_pemberitahuan = selectPemberitahuanByIdSiswa($data_siswa['id_siswa'], 'false')->num_rows;
+    $jumlah_pemberitahuan = selectPemberitahuanByIdSiswaDibaca($data_siswa['id_siswa'], 'false')->num_rows;
 }
 
 ?>
@@ -51,7 +51,7 @@ if ($_SESSION['role'] === 'siswa') {
 
         <div class="d-flex align-items-center justify-content-between">
             <a href="index.html" class="logo d-flex align-items-center">
-                <img src="assets/img/logo.png" alt="">
+                <img src="img/logo/logo-sekolah.png" alt="">
                 <span class="d-none d-lg-block"><?= APP_NAME ?></span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -87,7 +87,7 @@ if ($_SESSION['role'] === 'siswa') {
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="logout.php">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>

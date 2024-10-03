@@ -4,20 +4,25 @@
     <!-- title -->
     <div class="mb-5 text-center">
         <h1>About</h1>
-        <p style="font-size: 0.8rem;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, aperiam.</p>
+        <p style="font-size: 0.8rem;">Mengenal Kami Lebih Dekat</p>
     </div>
 
     <!-- content -->
     <div class="row">
         <div class="col-lg-6 text-end">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quod nesciunt soluta omnis voluptas aliquam quas vero saepe reiciendis, eligendi mollitia incidunt optio, alias sed perspiciatis temporibus, repellendus aperiam delectus molestias. Eius debitis adipisci vitae. Accusamus aliquid quidem laudantium necessitatibus incidunt totam eligendi dolore voluptas ratione, magnam eum saepe esse!</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem quae corrupti eum voluptatem repellat dolor earum quisquam expedita rem maxime tempore, consequatur optio deserunt ducimus, omnis explicabo iste et, libero alias! Eius, labore molestiae! Culpa esse cumque quasi similique aut doloremque fugiat iste voluptate eaque maiores! Sapiente, quasi, voluptates praesentium sit illo amet rem sed sequi deserunt dolorem impedit obcaecati quisquam tempora vel perferendis fuga, minima facere. At provident possimus quidem, alias ex nihil, reiciendis iste odio eaque dignissimos eius! Architecto nostrum nam adipisci ut iusto mollitia natus maiores dolorum at nobis obcaecati magni, magnam, totam voluptas, quam cupiditate dolor.</p>
+            <p>SMA Papua di Kota Sorong adalah salah satu sekolah menengah atas yang menjadi kebanggaan di wilayah Papua Barat Daya. Terletak di kota strategis yang merupakan pintu gerbang bagi daerah sekitar, sekolah ini menawarkan pendidikan yang tidak hanya fokus pada prestasi akademik, tetapi juga pengembangan karakter dan budaya lokal. Dengan latar belakang keindahan alam Papua yang menakjubkan, para siswa di SMA ini memiliki kesempatan untuk tumbuh dalam lingkungan yang kaya akan keragaman budaya.</p>
+            <p>SMA Papua Kota Sorong juga sering kali menjadi pelopor dalam berbagai kegiatan olahraga dan seni, mencetak prestasi di tingkat regional maupun nasional. Selain itu, sekolah ini sangat mendukung pengembangan keterampilan teknologi dan inovasi, yang relevan dengan perkembangan zaman. Kombinasi antara pendidikan berkualitas, perhatian pada budaya lokal, dan semangat inovasi menjadikan SMA Papua Kota Sorong sebagai salah satu tempat terbaik bagi generasi muda untuk mempersiapkan masa depan mereka.</p>
         </div>
         <div class="col-lg-6">
             <h3>Visi</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam a vitae quas quisquam odio maiores sit quibusdam assumenda velit perferendis minus magni consectetur mollitia id ipsum laborum dolore qui, adipisci, ratione aspernatur harum odit possimus at est! Blanditiis, quaerat non!</p>
+            <p>Menghasilkan peserta didik yang beriman, bermoral Pancasila, terampil, dan bertanggung jawab</p>
             <h3>Misi</h3>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex iste, culpa rem ut possimus consequatur voluptatibus architecto quos, illum quidem quis nam assumenda officia quae reprehenderit molestiae repellendus voluptate illo doloribus consectetur perferendis ipsa maxime! Aperiam dicta aut, voluptatum alias nostrum suscipit cumque doloribus assumenda sint animi vero explicabo qui autem eum natus veritatis quis tempore consequatur nihil impedit blanditiis dolore ullam ea? Impedit dolorum, qui laboriosam quo velit quod dolore, numquam deleniti quasi harum, exercitationem rem nobis repellat. Non, consequatur ipsum ad mollitia voluptatibus voluptate quam aperiam odit animi excepturi earum, molestiae, libero repellat rerum recusandae praesentium error hic!</p>
+            <ul>
+                <li>Membangun kebiasaan tertib beribadah serta membimbing peserta didik bermasalah melalui pendekatan keagamaan</li>
+                <li>Mengembangkan potensi peserta didik dalam iptek dan spiritual</li>
+                <li>Membentuk peserta didik yang berkarakter sesuai dengan nilai-nilai luhur Bangsa Indonesia</li>
+                <li>Mengasah kreatifitas dan keterampilan agar dapat menghasilkan sesuatu yang bermanfaat</li>
+            </ul>
         </div>
     </div>
 </div>

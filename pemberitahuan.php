@@ -17,7 +17,7 @@ $id_siswa = ($role === 'siswa') ? selectSiswaById($_SESSION['id_pengguna'])['id_
 
 // jika role siswa
 if ($role === 'siswa') {
-    $pemberitahuan = selectPemberitahuanByIdSiswa($id_siswa, 'true');
+    $pemberitahuan = selectPemberitahuanByIdSiswa($id_siswa);
 }
 
 if ($role === 'admin') {

@@ -28,6 +28,13 @@ if (isset($_POST['hapus'])) {
     }
 }
 
+// jika convert to pdf di tekan
+if (isset($_POST['laporan'])) {
+    $data = listSiswa();
+    laporan("Data Siswa", $data, 'siswa');
+    exit;
+}
+
 $title = 'Siswa';
 require_once __DIR__ . '/template/dashboard_navbar.php';
 
@@ -36,12 +43,14 @@ require_once __DIR__ . '/template/dashboard_navbar.php';
 <main id="main" class="main">
     <div class="pagetitle mb-3">
         <h1>Siswa</h1>
-        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, totam ducimus! Quidem harum quos recusandae sed nihil consequatur impedit esse quaerat. Quasi ad possimus cupiditate suscipit nulla. Molestias, earum impedit?</span>
+        <span>Memanagement sebuah data siswa serta membuat akun dari siswa</span>
     </div>
 
     <div class="row text-end">
         <div class="col">
-            <a href="#" class="btn btn-secondary">Generate</a>
+            <form action="" method="post" class="d-inline">
+                <button type="submit" class="btn btn-secondary" name="laporan">Convert to PDF</button>
+            </form>
             <a href="siswa_tambah.php" class="btn btn-primary">Tambah Data</a>
         </div>
     </div>

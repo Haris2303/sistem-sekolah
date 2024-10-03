@@ -23,7 +23,7 @@ function selectPemberitahuanById($id_pemberituan)
     return $conn->query($sql)->fetch_assoc();
 }
 
-function selectPemberitahuanByIdSiswa($id_siswa, $dibaca)
+function selectPemberitahuanByIdSiswaDibaca($id_siswa, $dibaca)
 {
     global $conn;
     $sql = "SELECT pemberitahuan.*, pengguna.nama as `nama` 
@@ -31,6 +31,17 @@ function selectPemberitahuanByIdSiswa($id_siswa, $dibaca)
             JOIN siswa ON pemberitahuan.id_siswa = siswa.id_siswa
             JOIN pengguna ON siswa.id_pengguna = pengguna.id_pengguna
             WHERE siswa.id_siswa = $id_siswa AND dibaca = $dibaca";
+    return $conn->query($sql);
+}
+
+function selectPemberitahuanByIdSiswa($id_siswa)
+{
+    global $conn;
+    $sql = "SELECT pemberitahuan.*, pengguna.nama as `nama` 
+            FROM pemberitahuan
+            JOIN siswa ON pemberitahuan.id_siswa = siswa.id_siswa
+            JOIN pengguna ON siswa.id_pengguna = pengguna.id_pengguna
+            WHERE siswa.id_siswa = $id_siswa";
     return $conn->query($sql);
 }
 
